@@ -1,38 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&display=swap');
+html {
+  background-color: #1a1a1a;
+}
+body {
+  background-color: #EEE;
+  margin: auto;
+  max-height: 640px;
+  max-width: 450px;
+  height: 100vh;
+  width: 100vw;
+}
 .App {
   text-align: center;
+  font-family: 'Merriweather', serif;
+  max-height: 640px;
+  max-width: 450px;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-size: 24px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.title {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 30px;
+  margin: 10px auto 0;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  width: calc(100% - 40px);
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header-bar,
+.footer-bar {
+  width: calc(100% - 40px);
+  padding: 0 20px;
+  height: 30px;
+  background-color: transparent;
+  color: #3c70e0;
+  font-size: 12px;
+  line-height: 30px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+}
+.footer-bar {
+  display: block;
+}
+.header-bar h1 {
+  margin: 0;
+  padding: 0;
+  width: 50%;
+}
+.modal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: calc(100% - 22px);
+  height: calc(100% - 22px);
+  background-color: #DDD;
+  border: solid 1px #CCC;
+}
+.modal p {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+.modal .uniqueInfo {
+  width: calc(100% - 60px);
+  margin: 0 10px 20px;
+  padding: 20px;
+  background-color: #eaeaea;
+  border-bottom: solid 1px #AAA;
+  border-right: solid 1px #AAA;
+  font-size: 16px;
+}
+.modal .header-bar {
+  /* display: block; */
+  text-align: right;
+  height: 30px;
+  line-height: 30px;
+  padding-top: 10px;
+}
+.modal .header-bar h1 {
+  color: #1a1a1a;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+form {
+  width: calc(100% - 60px);
+  margin: auto;
+}
+form label {
+  display: block;
+  margin: 5px auto;
+  text-align: left;
+  font-size: 10px;
+}
+form label input[type="text"] {
+  display: block;
+  width: calc(100% - 10px);
+  padding: 0 5px;
+  height: 32px;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+}
+.check {
+  text-align: center;
+}
+form label input[type="checkbox"] {
+  display: inline;
+  position: relative;
+  top: 2px;
+}
+form button {
+  width: 80%;
+  height: auto;
+  line-height: 1;
+  padding: 12px 0;
+  margin-top: 10px;
+  font-size: 16px;
+  background-color: rgb(121, 168, 255);
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: 'Merriweather', serif;
+}
+.execute-buttons {
+  width: 100%;
+  height: calc(100% - 100px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  position: relative;
+}
+.execute-buttons button {
+  display: grid;
+  grid-template-columns: 60px 1fr 40px;
+  width: calc(100% - 40px);
+  padding: 0 20px 2px;
+  border: none;
+  border-bottom: solid 1px #AAA;
+  margin: 3px auto;
+  height: 10%;
+  position: relative;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Merriweather', serif;
+  text-align: left;
+}
+.execute-buttons button div {
+  height: 24px;
+  line-height: 24px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.execute-buttons button .info {
+  width: 14px;
+  height: 14px;
+  border: solid 2px gray;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  color: gray;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 14px;
+  text-align: center;
+}
+.created-notice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 20px;
   color: white;
+  background-color: navy;
+  box-shadow: 5px 5px #1a1a1a88;
+  border-radius: 8px;
+  animation: fade 5s ease;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }   
+  70% {
+    opacity: 1;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 0;
   }
 }
