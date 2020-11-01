@@ -3,10 +3,67 @@ import { useEffect, useState } from 'react';
 import { generatePdf } from "./scripts/pdf-util"
 import { downloadBlob } from "./scripts/dom-utils"
 import pdfBase from './certificate.pdf'
+import styled from 'styled-components'
 import About from './About'
 import Info from './Info'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
+import StyledTitle from './styles/StyledTitle'
+import StyledHeaderBar from './styles/StyledHeaderBar'
+const StyledContainer = styled.div`
+        text-align: center;
+        font-family: 'Merriweather', serif;
+        min-height: 568px;
+        max-width: 450px;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: relative;
+        background-color: #EEE;
+    `
+const StyledLangSelector = styled.div`
+    width: 88px;
+    margin-right: -6px;
+    position: relative;
+`
+const StyledLangButton = styled.img`
+    margin: ${props => props.currentLanguage ? "1px 3px" : "3px 5px"};
+    border: ${props => props.currentLanguage ? "solid 2px #1a1a1a" : "none"};
+    padding: 1px;
+    border-radius: 50%;
+`
+const StyledFooterBar = styled(StyledHeaderBar)`
+    display: block;
+    height: 30px;
+    line-height: 30px;
+`
+const StyledConfirmation = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px;
+    color: white;
+    background-color: navy;
+    box-shadow: 5px 5px #1a1a1a88;
+    border-radius: 8px;
+    animation: fade 5s ease;
+    @keyframes fade {
+        0% {
+            opacity: 1;
+        }   
+        70% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+`
 
 const App = () => {
     const [address, setAddress] = useState("")
@@ -16,7 +73,7 @@ const App = () => {
     const [lastname, setLastname] = useState("")
     const [placeofbirth, setPlaceofbirth] = useState("")
     const [zipcode, setZipcode] = useState("")
-    const [english, setEnglish] = useState(false)
+    const [english, setEnglish] = useState(true)
     const [showData, setShowData] = useState(false)
     const [showAbout, setShowAbout] = useState(false)
     const [showInfo, setShowInfo] = useState("")
@@ -36,7 +93,6 @@ const App = () => {
             setShowData(true)
         }
     }, [])
-
     const updateData = () => {
         if (allFieldsValidated()) {
             window.localStorage.setItem('personal-info', 
@@ -53,7 +109,6 @@ const App = () => {
             setShowData(false)
         }
     }
-
     const updateBirthday = (e) => {
         if ((e.target.value.length === 2 && e.target.value.match(/\d{2}/)) || (e.target.value.length === 5 && e.target.value.match(/\d{2}\/\d{2}/))) {
             setBirthday(`${e.target.value}/`)
@@ -61,11 +116,9 @@ const App = () => {
             setBirthday(e.target.value)
         }
     }
-
     const allFieldsValidated = () => {
         return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     }
-
     const attemptPDF = (reason) => {
         if (allFieldsValidated) {
             let profile = {
@@ -95,7 +148,6 @@ const App = () => {
             console.log("missing a value")
         }
     }
-
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
 
@@ -107,7 +159,6 @@ const App = () => {
 
         downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
     }
-
     const info = {
         "Travail": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
         "Sport": "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie",
@@ -120,7 +171,6 @@ const App = () => {
         "Famille": "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants",
         "Sante": "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments"
     }
-
     const buttons = [
         {
             reason: "travail",
@@ -183,25 +233,23 @@ const App = () => {
             emoji: "🩺",
         },
     ]
-
     
     return (
-        <div className="App">
-            <div className='header-bar'>
+        <StyledContainer>
+            <StyledHeaderBar>
                 <div onClick={() => setShowData(true)}>
-                    {showData ? "" : english ? "Update My Data" : "Mettre à jour mes données"}
+                    {showData || showAbout || showInfo !== "" ? "" : <span>{english ? "Update My Data" : "Mettre à jour mes données"}</span>}
                 </div>
-                <div className='translate' onClick={() => setEnglish(english ? false : true)}>
-                    <img src="/france-flag-round-icon-32.png" className={english ? "" : "highlight"} />
-                    <img src="/united-kingdom-flag-round-icon-32.png" className={english ? "highlight" : ""} /> 
-                </div>
-            </div>
-            <div className="title">
-                {english ? "Choose Motive to Create Attestation" : "Choisissez un motif pour créer une attestation"}
-            </div>
+                <StyledLangSelector onClick={() => setEnglish(!english)}>
+                    <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
+                    <StyledLangButton src="/united-kingdom-flag-round-icon-32.png" currentLanguage={english} /> 
+                </StyledLangSelector>
+            </StyledHeaderBar>
+
+            
             
             { showAbout ? 
-                <About setShowAbout={setShowAbout} /> 
+                <About english={english} setShowAbout={setShowAbout} /> 
             : showData ? 
                 <MyData english={english} 
                             firstname={firstname}
@@ -211,7 +259,6 @@ const App = () => {
                             address={address}
                             city={city}
                             zipcode={zipcode}
-                            setEnglish={setEnglish}
                             setFirstname={setFirstname}
                             setLastname={setLastname}
                             updateBirthday={updateBirthday}
@@ -226,13 +273,13 @@ const App = () => {
                 <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
             }
 
-            <div className='footer-bar' onClick={() => setShowAbout(true)}>{english ? "About Sortir.io" : "À propos de Sortir.io" }</div>
+            <StyledFooterBar onClick={() => setShowAbout(true)}>{english ? "About Sortir.io" : "À propos de Sortir.io" }</StyledFooterBar>
             {downloading ? 
-                <div className='created-notice'>
+                <StyledConfirmation>
                     {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}
-                </div> : ""
+                </StyledConfirmation> : ""
             }
-        </div>
+        </StyledContainer>
     );
 }
 
