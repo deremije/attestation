@@ -3,22 +3,25 @@ html {
   background-color: #1a1a1a;
 }
 body {
-  background-color: #EEE;
   margin: auto;
-  max-height: 640px;
+  min-height: 568px;
   max-width: 450px;
   height: 100vh;
   width: 100vw;
 }
+.turn {
+  transform: rotate("-90deg");
+}
 .App {
   text-align: center;
   font-family: 'Merriweather', serif;
-  max-height: 640px;
+  min-height: 568px;
   max-width: 450px;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   position: relative;
+  background-color: #EEE;
 }
 h1 {
   font-size: 24px;
@@ -28,7 +31,7 @@ h1 {
   line-height: 30px;
   margin: 10px auto 0;
   text-align: left;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   width: calc(100% - 40px);
 }
@@ -60,15 +63,21 @@ h1 {
   top: 10px;
   left: 10px;
   width: calc(100% - 22px);
-  height: calc(100% - 22px);
+  height: calc(100% - 42px);
+  padding-bottom: 20px;
   background-color: #DDD;
   border: solid 1px #CCC;
+  overflow-y: auto;
 }
 .modal p {
   width: calc(100% - 20px);
-  padding: 10px;
-  font-size: 14px;
+  padding: 0px 10px;
+  font-size: 12px;
   text-align: left;
+}
+.modal p img {
+  position: relative;
+  vertical-align: middle;
 }
 .modal .uniqueInfo {
   width: calc(100% - 60px);
@@ -85,12 +94,16 @@ h1 {
   height: 30px;
   line-height: 30px;
   padding-top: 10px;
+  text-decoration: none;
 }
 .modal .header-bar h1 {
   color: #1a1a1a;
   text-align: left;
   margin: 0;
   padding: 0;
+}
+.underline {
+  text-decoration: underline;
 }
 form {
   width: calc(100% - 60px);
@@ -139,7 +152,7 @@ form button {
 }
 .execute-buttons button {
   display: grid;
-  grid-template-columns: 60px 1fr 40px;
+  grid-template-columns: 50px 1fr 40px;
   width: calc(100% - 40px);
   padding: 0 20px 2px;
   border: none;
