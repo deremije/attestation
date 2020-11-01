@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { generatePdf } from "./scripts/pdf-util"
 import { downloadBlob } from "./scripts/dom-utils"
 import pdfBase from './certificate.pdf'
+import About from './About'
+import Info from './Info'
+import MyData from './MyData'
+import ExecuteButtons from './ExecuteButtons'
 
 const App = () => {
     const [address, setAddress] = useState("")
@@ -194,113 +198,39 @@ const App = () => {
             <div className="title">
                 {english ? "Choose Motive to Create Attestation" : "Choisissez un motif pour créer une attestation"}
             </div>
-            <div className='execute-buttons'>
-                {buttons.map(b => 
-                    <button>
-                        <div onClick={() => attemptPDF(b.reason)}>
-                            {b.emoji}
-                        </div>
-                        <div onClick={() => attemptPDF(b.reason)}>
-                            {english ? b.english : b.french}
-                        </div>
-                        <div>
-                            <div className='info' onClick={() => setShowInfo(b.french)}>i</div>
-                        </div>
-                    </button>
-                )}
-            </div>
-
-            {showAbout ? 
-            <div className="modal">
-                <p>
-                    Sortir.io is a quick attestation generator to help you when you need to go out during lockdown in France.
-                    You only need to enter your personal details once, and then each time you return you just tap on the reason
-                    you're going out and an attestation will be generated immediately. Go to https://sortir.io on your mobile 
-                    phone, then choose "Add to Home Screen" to save it as an App.
-                </p>
-                <p> 
-                    Sortir.io saves your personal data to your browser's local storage, which means that until you clear
-                    your cache, it can keep the form filled in for you.  It also means that none of your data is transmitted
-                    anywhere, so it's entirely safe.
-                </p>
-                <p>
-                    Sortir.io was built by <a href='https://jeremyrandall.dev' target="_blank" rel="noreferrer">Jeremy Randall</a>, a Web Developer
-                    living in Lyon. Please email feedback to <a href="mailto:feedback@sortir.io">feedback@sortir.io</a>. Use of this tool is ABSOLUTELY FREE, 
-                    but if you really want to say thanks you can <a href="https://www.buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee</a>. 
-                </p>
-                <p>
-                    Please wear a mask in all public places, observe social distancing
-                    by staying at least 1 meter from other people, use hand sanitizer, 
-                    and wash your hands frequently.  Taking precautions will save lives -
-                    possibly even your own.
-                </p>
-                <button type="button" onClick={() => setShowAbout(false)}>Back</button>
-                <p>
-                    The source code is available on <a href="https://github.com/deremije/attestation" target="_blank" rel="noreferrer">Github</a>.  It is based on the original attestation 
-                    generator, which can be found <a href="https://github.com/LAB-MI/attestation-deplacement-derogatoire-q4-2020" target="_blank" rel="noreferrer">here</a>.
-                </p>
-                <p>
-                    <img src="/favicon-16x16.png" /> Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a> 
-                </p>
-            </div> : ""} 
-
-            {showData ? 
-            <div className="modal">
-                <div className='header-bar'>
-                    <h1 className='title'>{english ? "My Data" : "Mes données"}</h1>
-                    <div onClick={() => setEnglish(english ? false : true)}>
-                        {english ? "Passer au français" : "Switch to English"}
-                    </div>
-                </div>
-                <form autoComplete="off">
-                    <label>
-                        {english ? "First Name" : "Prénom"} <input type="text" value={firstname} placeholder="Brigitte" onChange={e => setFirstname(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Last Name" : "Nom"} <input type="text" value={lastname} placeholder="Macron" onChange={e => setLastname(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Birthdate" : "Date de naissance"} <input type="text" value={birthday} placeholder="01/01/2020" onChange={e => updateBirthday(e)} />
-                    </label>
-                    <label>
-                        {english ? "Birthplace" : "Lieu de naissance"} <input type="text" value={placeofbirth} placeholder="Lyon" onChange={e => setPlaceofbirth(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Address" : "Addresse"} <input type="text" value={address} placeholder="1 Champs-Elysses" onChange={e => setAddress(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Postal Code" : "Code postal"} <input type="text" value={zipcode} placeholder="10101" onChange={e => setZipcode(e.target.value)} />
-                    </label>
-                    
-                    <button type="button" onClick={updateData}>
-                        Save & Continue
-                    </button>
-                </form>
-                <p>
-                    {english ? "Once you enter your data, you will not be asked for it again." : "Après vous avez entré vos données, il ne vous sera plus demandé."}
-                </p>
-            </div> : "" }
-
-            {showInfo !== "" ? 
-            <div className="modal">
-                    <h1>{showInfo}</h1>
-                    <p>
-                        Je certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par le décret n°2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires pour faire face à l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire :
-                    </p>
-                    <p className='uniqueInfo'>{info[showInfo]}</p>
-                    <button type="button" onClick={() => setShowInfo("")}>Back</button> 
-                </div> : ""}
+            
+            { showAbout ? 
+                <About setShowAbout={setShowAbout} /> 
+            : showData ? 
+                <MyData english={english} 
+                            firstname={firstname}
+                            lastname={lastname}
+                            birthday={birthday}
+                            placeofbirth={placeofbirth}
+                            address={address}
+                            city={city}
+                            zipcode={zipcode}
+                            setEnglish={setEnglish}
+                            setFirstname={setFirstname}
+                            setLastname={setLastname}
+                            updateBirthday={updateBirthday}
+                            setPlaceofbirth={setPlaceofbirth}
+                            setAddress={setAddress}
+                            setCity={setCity}
+                            setZipcode={setZipcode}
+                            updateData={updateData} /> 
+            : showInfo !== "" ? 
+                <Info showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
+            : 
+                <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
+            }
 
             <div className='footer-bar' onClick={() => setShowAbout(true)}>About</div>
-            
             {downloading ? 
-            <div className='created-notice'>
-                {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}
-            </div> : ""}
-        
+                <div className='created-notice'>
+                    {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}
+                </div> : ""
+            }
         </div>
     );
 }
