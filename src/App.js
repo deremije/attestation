@@ -189,10 +189,11 @@ const App = () => {
         <div className="App">
             <div className='header-bar'>
                 <div onClick={() => setShowData(true)}>
-                    {english ? "Update My Data" : "Mettre à jour mes données"}
+                    {showData ? "" : english ? "Update My Data" : "Mettre à jour mes données"}
                 </div>
-                <div onClick={() => setEnglish(english ? false : true)}>
-                    {english ? "Passer au français" : "Switch to English"}
+                <div className='translate' onClick={() => setEnglish(english ? false : true)}>
+                    <img src="/france-flag-round-icon-32.png" className={english ? "" : "highlight"} />
+                    <img src="/united-kingdom-flag-round-icon-32.png" className={english ? "highlight" : ""} /> 
                 </div>
             </div>
             <div className="title">
@@ -225,7 +226,7 @@ const App = () => {
                 <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
             }
 
-            <div className='footer-bar' onClick={() => setShowAbout(true)}>About</div>
+            <div className='footer-bar' onClick={() => setShowAbout(true)}>{english ? "About Sortir.io" : "À propos de Sortir.io" }</div>
             {downloading ? 
                 <div className='created-notice'>
                     {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}

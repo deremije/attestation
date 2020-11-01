@@ -11,9 +11,6 @@ const MyData = ({ english, setEnglish, firstname, lastname, birthday, placeofbir
         <div className="modal">
             <div className='header-bar'>
                 <h1 className='title'>{english ? "My Data" : "Mes données"}</h1>
-                <div onClick={() => setEnglish(english ? false : true)}>
-                    {english ? "Passer au français" : "Switch to English"}
-                </div>
             </div>
             <form autoComplete="off">
                 <label>

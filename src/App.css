@@ -39,11 +39,11 @@ h1 {
 .footer-bar {
   width: calc(100% - 40px);
   padding: 0 20px;
-  height: 30px;
+  height: 40px;
   background-color: transparent;
   color: #3c70e0;
-  font-size: 12px;
-  line-height: 30px;
+  font-size: 14px;
+  line-height: 40px;
   display: flex;
   justify-content: space-between;
   font-weight: 300;
@@ -52,21 +52,35 @@ h1 {
 }
 .footer-bar {
   display: block;
+  height: 30px;
+  line-height: 30px;
 }
 .header-bar h1 {
   margin: 0;
   padding: 0;
-  width: 50%;
+  width: calc(100% - 96px);
+}
+.header-bar img {
+  margin: 3px 5px;
+  padding: 1px;
+}
+.header-bar .highlight {
+  margin: 1px 3px;
+  border: solid 2px #1a1a1a;
+  border-radius: 50%;
+}
+.header-bar .translate {
+  width: 88px;
+  margin-right: -6px;
 }
 .modal {
   position: absolute;
-  top: 10px;
+  top: 40px;
   left: 10px;
   width: calc(100% - 22px);
-  height: calc(100% - 42px);
+  height: calc(100% - 72px);
   padding-bottom: 20px;
-  background-color: #DDD;
-  border: solid 1px #CCC;
+  background-color: #FFF;
   overflow-y: auto;
 }
 .instructions {
@@ -79,11 +93,40 @@ h1 {
 .instructions h1 {
   padding: 5px;
 }
+.modal button {
+  width: auto;
+  height: 40px;
+  padding: 0 20px;
+  line-height: 40px;
+  font-size: 18px;
+  background-color: #3c70e0;
+  color: #eee;
+  border-radius: 8px;
+}
+.instructions .important {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
 .modal p {
   width: calc(100% - 20px);
   padding: 0px 10px;
   font-size: 14px;
   text-align: left;
+}
+.modal .bullet-points {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.modal .bullet-points ol {
+  margin: 5px auto;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+.modal .bullet-points ol li {
+  margin: 5px 0;
 }
 .modal p img {
   position: relative;
@@ -138,7 +181,9 @@ form label input[type="text"] {
   display: block;
   width: calc(100% - 10px);
   padding: 0 5px;
-  height: 32px;
+  margin-top: 2px;
+  height: 28px;
+  border-color: #BBB;
   font-size: 18px;
   font-family: 'Montserrat', sans-serif;
 }
@@ -151,20 +196,11 @@ form label input[type="checkbox"] {
   top: 2px;
 }
 form button {
-  width: 80%;
-  height: auto;
-  line-height: 1;
-  padding: 12px 0;
   margin-top: 10px;
-  font-size: 16px;
-  background-color: rgb(121, 168, 255);
-  border-radius: 5px;
-  font-weight: bold;
-  font-family: 'Merriweather', serif;
 }
 .execute-buttons {
   width: 100%;
-  height: calc(100% - 100px);
+  height: calc(100% - 110px);
   display: flex;
   flex-direction: column;
   position: relative;

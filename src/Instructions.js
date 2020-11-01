@@ -5,14 +5,29 @@ const Instructions = ({ setShowInstructions }) => {
                 Sortir.io
             </h1>
             <h3>
-            Quick Generator for L'Attestation de Deplacement Derogatoire
+                Quick Generator for L'Attestation de Deplacement Derogatoire
             </h3>
-            <p style={{"color": "red", "fontWeight": "bold", "textAlign": "center"}}>
+            <p className='important'>
                 Please read these instructions once, and they will never appear again.
             </p>
+            <p className='bullet-points'>
+                How to use Sortir.io:
+                <ol>
+                    <li>
+                        Save your identity details
+                    </li>
+                    <li>
+                        Choose your reason to be out
+                    </li>
+                    <li>
+                        Present your downloaded attestation to authorities who request it
+                    </li>
+                </ol>
+            </p>
+            <button type="button" onClick={() => {setShowInstructions(false)}}>Got It</button>
             <p>
                 Sortir.io is a quick attestation generator to help you when you need to go out during lockdown in France.
-                You only need to enter your personal details once, and then each time you return you just tap on the reason
+                You only need to enter your personal details once. Then each time you return, just tap on the reason
                 you're going out and an attestation will be generated immediately. 
             </p>
             <p>    
@@ -37,7 +52,6 @@ const Instructions = ({ setShowInstructions }) => {
                 and wash your hands frequently.  Taking precautions will save lives -
                 possibly even your own.
             </p>
-            <button type="button" onClick={() => {setShowInstructions(false)}}>Got It</button>
         </div>
     )
 }
