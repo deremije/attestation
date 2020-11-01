@@ -6,7 +6,7 @@ Sortir.io saves your personal data to your browser's local storage, which means 
 your cache, it can keep the form filled in for you.  It also means that none of your data is transmitted
 anywhere, so it's entirely safe.
 
-Sortir.io was built by <a href='https://jeremyrandall.dev' target="_blank" rel="noreferrer">Jeremy Randall</a>, a Front End Engineer living in Lyon. Please email feedback to <a href="mailto:feedback@sortir.io">feedback@sortir.io</a>. Use of this tool is ABSOLUTELY FREE, but if you really want to say thanks you can <a href="https://www.buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee</a>. 
+Sortir.io was built by <a href='https://jeremyrandall.dev' target="_blank" rel="noreferrer">Jeremy Randall</a>, a Web Developer living in Lyon. Please email feedback to <a href="mailto:feedback@sortir.io">feedback@sortir.io</a>. Use of this tool is ABSOLUTELY FREE, but if you really want to say thanks you can <a href="https://www.buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee</a>. 
 
 Please wear a mask in all public places, observe social distancing by staying at least 1 meter from other people, use hand sanitizer, and wash your hands frequently.  Taking precautions will save lives - possibly even your own.
 

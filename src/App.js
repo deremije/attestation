@@ -224,8 +224,9 @@ const App = () => {
                     anywhere, so it's entirely safe.
                 </p>
                 <p>
-                    Sortir.io was built by <a href='https://jeremyrandall.dev' target="_blank" rel="noreferrer">Jeremy Randall</a>, a Front End Engineer
-                    living in Lyon. Please email feedback to <a href="mailto:feedback@sortir.io">feedback@sortir.io</a>. Use of this tool is ABSOLUTELY FREE, but if you really want to say thanks you can <a href="https://www.buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee</a>. 
+                    Sortir.io was built by <a href='https://jeremyrandall.dev' target="_blank" rel="noreferrer">Jeremy Randall</a>, a Web Developer
+                    living in Lyon. Please email feedback to <a href="mailto:feedback@sortir.io">feedback@sortir.io</a>. Use of this tool is ABSOLUTELY FREE, 
+                    but if you really want to say thanks you can <a href="https://www.buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee</a>. 
                 </p>
                 <p>
                     Please wear a mask in all public places, observe social distancing
@@ -278,6 +279,9 @@ const App = () => {
                         Save & Continue
                     </button>
                 </form>
+                <p>
+                    {english ? "Once you enter your data, you will not be asked for it again." : "Après vous avez entré vos données, il ne vous sera plus demandé."}
+                </p>
             </div> : "" }
 
             {showInfo !== "" ? 
@@ -294,7 +298,7 @@ const App = () => {
             
             {downloading ? 
             <div className='created-notice'>
-                {english ? "Downloading your attestation" : "Téléchargement de votre attestation"}
+                {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}
             </div> : ""}
         
         </div>
