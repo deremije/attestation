@@ -1,4 +1,12 @@
+import { useState, useEffect } from 'react'
+import Instructions from './Instructions'
+
 const MyData = ({ english, setEnglish, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
+    const [showInstructions, setShowInstructions] = useState(false)
+    useEffect(() => {
+        if (firstname.length === 0) setShowInstructions(true)
+    }, [])
+
     return (
         <div className="modal">
             <div className='header-bar'>
@@ -34,9 +42,12 @@ const MyData = ({ english, setEnglish, firstname, lastname, birthday, placeofbir
                     Save & Continue
                 </button>
             </form>
-            <p>
-                {english ? "Once you enter your data, you will not be asked for it again." : "Après vous avez entré vos données, il ne vous sera plus demandé."}
+            <p className="how-to-link">
+                <span onClick={() => setShowInstructions(true)}>
+                    <img src="/favicon-16x16.png" /> {english ? "How to Use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
+                </span>
             </p>
+            {showInstructions ? <Instructions setShowInstructions={setShowInstructions} /> : ""}
         </div>
     )
 }
