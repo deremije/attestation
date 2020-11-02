@@ -30,7 +30,8 @@ const StyledSection = styled.section`
             text-align: left;
             font-size: 14px;
             font-family: 'Montserrat', sans-serif;
-            input[type="text"] {
+            input[type="text"],
+            input[type="number"] {
                 display: block;
                 width: calc(100% - 10px);
                 padding: 0 5px;
@@ -39,6 +40,11 @@ const StyledSection = styled.section`
                 border-color: #BBB;
                 font-size: 18px;
                 font-family: 'Merriweather', sans-serif;
+                position: relative;
+            }
+            .error {
+                background-color: lightpink;
+                border-color: red;
             }
         }
         p {

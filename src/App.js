@@ -4,12 +4,10 @@ import { generatePdf } from "./scripts/pdf-util"
 import { downloadBlob } from "./scripts/dom-utils"
 import pdfBase from './certificate.pdf'
 import styled from 'styled-components'
-import About from './About'
 import Info from './Info'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
 import Instructions from './Instructions'
-import StyledTitle from './styles/StyledTitle'
 import StyledHeaderBar from './styles/StyledHeaderBar'
 const StyledContainer = styled.div`
         text-align: center;
@@ -89,7 +87,6 @@ const App = () => {
     const [zipcode, setZipcode] = useState("")
     const [english, setEnglish] = useState(false)
     const [showData, setShowData] = useState(false)
-    const [showAbout, setShowAbout] = useState(false)
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
@@ -116,8 +113,14 @@ const App = () => {
         window.localStorage.setItem('use-english', !english)
         setEnglish(!english)
     }
+    const allFieldsValidated = () => {
+        console.log(zipcode.match(/\d{5}/))
+        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.toString().length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
+    }
     const updateData = () => {
+        console.log('updateData', allFieldsValidated())
         if (allFieldsValidated()) {
+            console.log("yep, ok")
             window.localStorage.setItem('personal-info', 
                 JSON.stringify({
                     address: address,
@@ -130,6 +133,8 @@ const App = () => {
                 })
             )
             setShowData(false)
+        } else {
+            console.log("something's wrong")
         }
     }
     const updateBirthday = (e) => {
@@ -139,9 +144,7 @@ const App = () => {
             setBirthday(e.target.value)
         }
     }
-    const allFieldsValidated = () => {
-        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
-    }
+    
     const attemptPDF = (reason) => {
         if (allFieldsValidated) {
             let profile = {
@@ -261,7 +264,7 @@ const App = () => {
         <StyledContainer>
             <StyledHeaderBar>
                 <div onClick={() => setShowData(true)}>
-                    {showData || showAbout || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
+                    {showData || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
                 </div>
                 <StyledLangSelector onClick={updateLanguage}>
                     <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
@@ -272,9 +275,7 @@ const App = () => {
             
             
             { showData ? 
-                <MyData english={english} 
-                        showInstructions={showInstructions}
-                        setShowInstructions={setShowInstructions} 
+                <MyData english={english}  
                         firstname={firstname}
                         lastname={lastname}
                         birthday={birthday}

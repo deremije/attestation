@@ -25,45 +25,50 @@ const StyledSectionHeader = styled(StyledHeaderBar)`
 `
 
 
-const MyData = ({ english, showInstructions, setShowInstructions, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
+const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
+    const birthdayValid = () => {
+        return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
+    }
+    const postalCodeValid = () => {
+        return zipcode.length === 0 || zipcode.length === 5 ? "" : "error"
+    }
     return (
         <StyledSection>
-            
-                <StyledSectionHeader>
-                    <h1>{english ? "My Identity Details" : "Mes données"}</h1>
-                </StyledSectionHeader>
-                <form autoComplete="off">
-                    <label>
-                        {english ? "First Name" : "Prénom"} <input type="text" value={firstname} placeholder="Emmanuel" onChange={e => setFirstname(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Last Name" : "Nom"} <input type="text" value={lastname} placeholder="Macron" onChange={e => setLastname(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Birthdate" : "Date de naissance"} <input type="text" value={birthday} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
-                    </label>
-                    <label>
-                        {english ? "Birthplace" : "Lieu de naissance"} <input type="text" value={placeofbirth} placeholder="Amiens" onChange={e => setPlaceofbirth(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Address" : "Addresse"} <input type="text" value={address} placeholder="Palais de l’Élysée" onChange={e => setAddress(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
-                    </label>
-                    <label>
-                        {english ? "Postal Code" : "Code postal"} <input type="text" value={zipcode} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
-                    </label>
-                    
-                    <StyledButton onClick={updateData}>
-                        {english ? "Save" : "Suivant"}
-                    </StyledButton>
-                    <p>
-                        {english ? 
-                            "Identity details are stored locally and never transmitted to anyone" : 
-                            "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
-                    </p>
-                </form>
+            <StyledSectionHeader>
+                <h1>{english ? "My Identity Details" : "Mes données"}</h1>
+            </StyledSectionHeader>
+            <form autoComplete="off">
+                <label>
+                    {english ? "First Name" : "Prénom"} <input type="text" value={firstname} placeholder="Emmanuel" onChange={e => setFirstname(e.target.value)} />
+                </label>
+                <label>
+                    {english ? "Last Name" : "Nom"} <input type="text" value={lastname} placeholder="Macron" onChange={e => setLastname(e.target.value)} />
+                </label>
+                <label>
+                    {english ? "Birthdate (form" : "Date de naissance (sous forme"} 12/02/1980) <input type="text" value={birthday} className={birthdayValid()} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
+                </label>
+                <label>
+                    {english ? "Birthplace" : "Lieu de naissance"} <input type="text" value={placeofbirth} placeholder="Amiens" onChange={e => setPlaceofbirth(e.target.value)} />
+                </label>
+                <label>
+                    {english ? "Address" : "Addresse"} <input type="text" value={address} placeholder="Palais de l’Élysée" onChange={e => setAddress(e.target.value)} />
+                </label>
+                <label>
+                    {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
+                </label>
+                <label>
+                    {english ? "Postal Code (5 digits)" : "Code postal (5 chiffres)"} <input type="number" value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
+                </label>
+                
+                <StyledButton type="button" onClick={updateData}>
+                    {english ? "Save" : "Suivant"}
+                </StyledButton>
+                <p>
+                    {english ? 
+                        "Identity details are stored locally and never transmitted to anyone" : 
+                        "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
+                </p>
+            </form>
         </StyledSection>
     )
 }
