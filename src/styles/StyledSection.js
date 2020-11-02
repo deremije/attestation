@@ -21,6 +21,12 @@ const StyledSection = styled.section`
             vertical-align: middle;
         }
     }
+    .indent {
+        padding: 0px 30px;
+        width: calc(100% - 60px);
+        margin-top: -10px;
+        text-align: center;
+    }
     form {
         width: calc(100% - 60px);
         margin: auto;
@@ -36,6 +42,7 @@ const StyledSection = styled.section`
                 width: calc(100% - 10px);
                 padding: 0 5px;
                 margin-top: 2px;
+                margin-left: -2px;
                 height: 28px;
                 border-color: #BBB;
                 font-size: 18px;
@@ -46,14 +53,6 @@ const StyledSection = styled.section`
                 background-color: lightpink;
                 border-color: red;
             }
-        }
-        p {
-            width: calc(100% - 60px);
-            height: auto;
-            padding: 0px 30px;
-            font-size: 14px;
-            text-align: center;
-            margin-top: -10px;
         }
     }
 `

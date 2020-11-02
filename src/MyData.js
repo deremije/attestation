@@ -45,7 +45,7 @@ const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address,
                     {english ? "Last Name" : "Nom"} <input type="text" value={lastname} placeholder="Macron" onChange={e => setLastname(e.target.value)} />
                 </label>
                 <label>
-                    {english ? "Birthdate (form" : "Date de naissance (sous forme"} 12/02/1980) <input type="text" value={birthday} className={birthdayValid()} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
+                    {english ? "Birthdate (form" : "Date de naissance (forme"} 21/12/1977) <input type="text" value={birthday} className={birthdayValid()} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
                 </label>
                 <label>
                     {english ? "Birthplace" : "Lieu de naissance"} <input type="text" value={placeofbirth} placeholder="Amiens" onChange={e => setPlaceofbirth(e.target.value)} />
@@ -57,18 +57,19 @@ const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address,
                     {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
                 </label>
                 <label>
-                    {english ? "Postal Code (5 digits)" : "Code postal (5 chiffres)"} <input type="number" value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
+                    {english ? "Postal Code (5 digits)" : "Code postal (5 chiffres)"} <input type="number" step='0' value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
                 </label>
                 
-                <StyledButton type="button" onClick={updateData}>
-                    {english ? "Save" : "Suivant"}
-                </StyledButton>
-                <p>
-                    {english ? 
-                        "Identity details are stored locally and never transmitted to anyone" : 
-                        "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
-                </p>
+                
             </form>
+            <StyledButton type="button" onClick={updateData}>
+                {english ? "Save" : "Suivant"}
+            </StyledButton>
+            <p className="indent">
+                {english ? 
+                    "Identity details are stored locally and never transmitted to anyone" : 
+                    "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
+            </p>
         </StyledSection>
     )
 }

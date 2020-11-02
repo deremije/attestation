@@ -53,7 +53,7 @@ const ExecuteButtons = ({ buttons, english, attemptPDF, setShowInfo }) => {
     return (
         <StyledReasonButtons>
             <StyledTitle>
-                {english ? "Choose Motive to Create Attestation" : "Choisissez un motif pour créer une attestation"}
+                {english ? "Choose your reason to go out" : "Choisissez votre motif pour sortir"}
             </StyledTitle>
             {buttons.map(b => 
                 <button>

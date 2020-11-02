@@ -25,8 +25,8 @@ const StyledInstructions = styled.div`
         font-size: 22px;
     }
     p {
-        width: calc(100% - 120px);
-        padding: 0px 60px;
+        width: calc(100% - 80px);
+        padding: 0px 40px;
         font-size: 18px;
         text-align: left;
     }

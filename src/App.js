@@ -114,13 +114,10 @@ const App = () => {
         setEnglish(!english)
     }
     const allFieldsValidated = () => {
-        console.log(zipcode.match(/\d{5}/))
         return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.toString().length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     }
     const updateData = () => {
-        console.log('updateData', allFieldsValidated())
         if (allFieldsValidated()) {
-            console.log("yep, ok")
             window.localStorage.setItem('personal-info', 
                 JSON.stringify({
                     address: address,
@@ -133,8 +130,6 @@ const App = () => {
                 })
             )
             setShowData(false)
-        } else {
-            console.log("something's wrong")
         }
     }
     const updateBirthday = (e) => {
@@ -264,7 +259,7 @@ const App = () => {
         <StyledContainer>
             <StyledHeaderBar>
                 <div onClick={() => setShowData(true)}>
-                    {showData || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
+                    {showInstructions || showData || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
                 </div>
                 <StyledLangSelector onClick={updateLanguage}>
                     <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
