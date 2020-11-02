@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
 const StyledSection = styled.section`
-    position: absolute;
-    top: 40px;
+    position: relative;
+    top: 0px;
     left: 0px;
     width: 100%;
-    height: calc(100% - 72px);
-    padding-bottom: 20px;
+    height: calc(100% - 92px);
+    padding-bottom: 0px;
     background-color: #eee;
     overflow-y: auto;
     p {

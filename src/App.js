@@ -8,6 +8,7 @@ import About from './About'
 import Info from './Info'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
+import Instructions from './Instructions'
 import StyledTitle from './styles/StyledTitle'
 import StyledHeaderBar from './styles/StyledHeaderBar'
 const StyledContainer = styled.div`
@@ -64,6 +65,19 @@ const StyledConfirmation = styled.div`
         }
     }
 `
+const StyledHowToLink = styled.p`
+    color: #3c70e0;
+    cursor: pointer;
+    span {
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        img {
+            position: relative;
+            vertical-align: middle;
+        }
+    }
+`
 
 const App = () => {
     const [address, setAddress] = useState("")
@@ -78,6 +92,10 @@ const App = () => {
     const [showAbout, setShowAbout] = useState(false)
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
+    const [showInstructions, setShowInstructions] = useState(false)
+    useEffect(() => {
+        if (firstname.length === 0) setShowInstructions(true)
+    }, [])
 
     useEffect(() => {
         if (window.localStorage.getItem('personal-info')) {
@@ -252,28 +270,38 @@ const App = () => {
                 <About english={english} setShowAbout={setShowAbout} /> 
             : showData ? 
                 <MyData english={english} 
-                            firstname={firstname}
-                            lastname={lastname}
-                            birthday={birthday}
-                            placeofbirth={placeofbirth}
-                            address={address}
-                            city={city}
-                            zipcode={zipcode}
-                            setFirstname={setFirstname}
-                            setLastname={setLastname}
-                            updateBirthday={updateBirthday}
-                            setPlaceofbirth={setPlaceofbirth}
-                            setAddress={setAddress}
-                            setCity={setCity}
-                            setZipcode={setZipcode}
-                            updateData={updateData} /> 
+                        showInstructions={showInstructions}
+                        setShowInstructions={setShowInstructions} 
+                        firstname={firstname}
+                        lastname={lastname}
+                        birthday={birthday}
+                        placeofbirth={placeofbirth}
+                        address={address}
+                        city={city}
+                        zipcode={zipcode}
+                        setFirstname={setFirstname}
+                        setLastname={setLastname}
+                        updateBirthday={updateBirthday}
+                        setPlaceofbirth={setPlaceofbirth}
+                        setAddress={setAddress}
+                        setCity={setCity}
+                        setZipcode={setZipcode}
+                        updateData={updateData} /> 
             : showInfo !== "" ? 
                 <Info showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
             : 
                 <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
             }
 
-            <StyledFooterBar onClick={() => setShowAbout(true)}>{english ? "About Sortir.io" : "À propos de Sortir.io" }</StyledFooterBar>
+            {showInstructions ? <Instructions english={english} setShowInstructions={setShowInstructions} /> : ""}
+            
+            <StyledFooterBar>
+                {!showInstructions ? <StyledHowToLink>
+                    <span onClick={() => setShowInstructions(true)}>
+                        <img src="/favicon-16x16.png" /> {english ? "How to Use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
+                    </span>
+                </StyledHowToLink> : ""}
+            </StyledFooterBar>
             {downloading ? 
                 <StyledConfirmation>
                     {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}

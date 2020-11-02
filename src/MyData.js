@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Instructions from './Instructions'
 import StyledSection from './styles/StyledSection'
 import styled from 'styled-components'
 import StyledHeaderBar from './styles/StyledHeaderBar'
@@ -24,30 +23,12 @@ const StyledSectionHeader = styled(StyledHeaderBar)`
         padding: 0;
     }
 `
-const StyledHowToLink = styled.p`
-    color: #3c70e0;
-    cursor: pointer;
-    span {
-        text-align: center;
-        width: 100%;
-        display: inline-block;
-        img {
-            position: relative;
-            vertical-align: middle;
-        }
-    }
-`
 
-const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
-    const [showInstructions, setShowInstructions] = useState(false)
-    useEffect(() => {
-        if (firstname.length === 0) setShowInstructions(true)
-    }, [])
 
+const MyData = ({ english, showInstructions, setShowInstructions, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
     return (
         <StyledSection>
-            {!showInstructions ?
-            <div>
+            
                 <StyledSectionHeader>
                     <h1>{english ? "My Identity Details" : "Mes données"}</h1>
                 </StyledSectionHeader>
@@ -75,15 +56,9 @@ const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address,
                     </label>
                     
                     <StyledButton onClick={updateData}>
-                        {english ? "Save" : "Suivre"}
+                        {english ? "Save" : "Suivant"}
                     </StyledButton>
                 </form>
-                <StyledHowToLink>
-                <span onClick={() => setShowInstructions(true)}>
-                    <img src="/favicon-16x16.png" /> {english ? "How to Use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
-                </span>
-            </StyledHowToLink>
-            </div> : <Instructions english={english} setShowInstructions={setShowInstructions} /> }
         </StyledSection>
     )
 }

@@ -6,11 +6,11 @@ const StyledInstructions = styled.div`
     position: absolute;
     background-color: #eee;
     overflow-y: auto;
-    top: 0;
+    top: 40px;
     left: 0;
     width: 100%;
-    height: calc(100% - 20px);
-    padding-bottom: 20px;
+    height: calc(100% - 40px);
+    padding-bottom: 0px;
     font-family: 'Monserrat', sans-serif;
     h3, h4 {
         padding: 5px;
