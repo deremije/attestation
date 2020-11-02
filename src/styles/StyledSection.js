@@ -10,10 +10,12 @@ const StyledSection = styled.section`
     background-color: #eee;
     overflow-y: auto;
     p {
-        width: calc(100% - 20px);
-        padding: 0px 10px;
-        font-size: 14px;
+        width: calc(100% - 40px);
+        padding: 10px 20px;
+        font-size: 16px;
+        line-height: 24px;
         text-align: left; 
+        font-family: "Montserrat", sans-serif;
         img {
             position: relative;
             vertical-align: middle;
@@ -38,6 +40,14 @@ const StyledSection = styled.section`
                 font-size: 18px;
                 font-family: 'Merriweather', sans-serif;
             }
+        }
+        p {
+            width: calc(100% - 60px);
+            height: auto;
+            padding: 0px 30px;
+            font-size: 14px;
+            text-align: center;
+            margin-top: -10px;
         }
     }
 `

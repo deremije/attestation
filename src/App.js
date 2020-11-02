@@ -87,17 +87,17 @@ const App = () => {
     const [lastname, setLastname] = useState("")
     const [placeofbirth, setPlaceofbirth] = useState("")
     const [zipcode, setZipcode] = useState("")
-    const [english, setEnglish] = useState(true)
+    const [english, setEnglish] = useState(false)
     const [showData, setShowData] = useState(false)
     const [showAbout, setShowAbout] = useState(false)
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
-    useEffect(() => {
-        if (firstname.length === 0) setShowInstructions(true)
-    }, [])
+    
 
     useEffect(() => {
+        if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
+        
         if (window.localStorage.getItem('personal-info')) {
             let personalInfo = JSON.parse(window.localStorage.getItem('personal-info'))
             setAddress(personalInfo.address) 
@@ -109,8 +109,13 @@ const App = () => {
             setZipcode(personalInfo.zipcode)
         } else {
             setShowData(true)
+            setShowInstructions(true)
         }
     }, [])
+    const updateLanguage = () => {
+        window.localStorage.setItem('use-english', !english)
+        setEnglish(!english)
+    }
     const updateData = () => {
         if (allFieldsValidated()) {
             window.localStorage.setItem('personal-info', 
@@ -256,9 +261,9 @@ const App = () => {
         <StyledContainer>
             <StyledHeaderBar>
                 <div onClick={() => setShowData(true)}>
-                    {showData || showAbout || showInfo !== "" ? "" : <span>{english ? "Update My Data" : "Mettre à jour mes données"}</span>}
+                    {showData || showAbout || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
                 </div>
-                <StyledLangSelector onClick={() => setEnglish(!english)}>
+                <StyledLangSelector onClick={updateLanguage}>
                     <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
                     <StyledLangButton src="/united-kingdom-flag-round-icon-32.png" currentLanguage={english} /> 
                 </StyledLangSelector>
@@ -266,9 +271,7 @@ const App = () => {
 
             
             
-            { showAbout ? 
-                <About english={english} setShowAbout={setShowAbout} /> 
-            : showData ? 
+            { showData ? 
                 <MyData english={english} 
                         showInstructions={showInstructions}
                         setShowInstructions={setShowInstructions} 
@@ -288,7 +291,7 @@ const App = () => {
                         setZipcode={setZipcode}
                         updateData={updateData} /> 
             : showInfo !== "" ? 
-                <Info showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
+                <Info english={english} showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
             : 
                 <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
             }
@@ -298,7 +301,7 @@ const App = () => {
             <StyledFooterBar>
                 {!showInstructions ? <StyledHowToLink>
                     <span onClick={() => setShowInstructions(true)}>
-                        <img src="/favicon-16x16.png" /> {english ? "How to Use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
+                        <img src="/favicon-16x16.png" /> {english ? "How to use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
                     </span>
                 </StyledHowToLink> : ""}
             </StyledFooterBar>

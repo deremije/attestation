@@ -58,6 +58,11 @@ const MyData = ({ english, showInstructions, setShowInstructions, firstname, las
                     <StyledButton onClick={updateData}>
                         {english ? "Save" : "Suivant"}
                     </StyledButton>
+                    <p>
+                        {english ? 
+                            "Identity details are stored locally and never transmitted to anyone" : 
+                            "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
+                    </p>
                 </form>
         </StyledSection>
     )

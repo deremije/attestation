@@ -21,6 +21,7 @@ const StyledReasonButtons = styled.div`
         font-weight: 400;
         font-family: 'Merriweather', serif;
         text-align: left;
+        background-color: transparent;
         div {
             height: 24px;
             line-height: 24px;

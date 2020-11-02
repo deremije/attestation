@@ -9,11 +9,13 @@ const StyledBlock = styled.div`
     background-color: #fff;
     border-bottom: solid 1px #AAA;
     border-right: solid 1px #AAA;
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 28px;
     text-align: left;
+    font-family: 'Montserrat', sans-serif;
 `
 
-const Info = ({ showInfo, info, setShowInfo }) => {
+const Info = ({ english, showInfo, info, setShowInfo }) => {
     return (
         <StyledSection>
             <h1>{showInfo}</h1>
@@ -21,7 +23,9 @@ const Info = ({ showInfo, info, setShowInfo }) => {
                 Je certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par le décret n°2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires pour faire face à l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire :
             </p>
             <StyledBlock>{info[showInfo]}</StyledBlock>
-            <StyledButton onClick={() => setShowInfo("")}>Back</StyledButton> 
+            <StyledButton onClick={() => setShowInfo("")}>
+                {english ? "Back" : "Retour"}
+            </StyledButton> 
         </StyledSection>
     )
 }
