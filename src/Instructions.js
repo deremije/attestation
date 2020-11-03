@@ -4,70 +4,63 @@ import StyledButton from './styles/StyledButton'
 import FAQ from './FAQ'
 
 const StyledInstructions = styled.div`
-    position: absolute;
+    position: relative;
     background-color: #eee;
     overflow-y: auto;
-    top: 40px;
-    left: 0;
     width: 100%;
-    height: calc(100% - 40px);
-    padding-bottom: 0px;
-    font-family: 'Monserrat', sans-serif;
-    h3 {
-        padding: 10px 10px 20px;
-        margin: 0;
-        font-size: 26px;
-        font-family: 'Merriweather', serif;
-    }
-    h4 {
-        margin: 0;
-        padding: 20px 10px 0;
-        font-size: 18px;
+    padding-top: 30px;
+    h1 {
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 900;
+        letter-spacing: 1.25px;
+        color: #205ddb;
+        text-align: center;
+        margin: 40px 0 10px 0;
+        padding: 0;
     }
     p {
+        font-size: 16px;
+        line-height: 22px;
+        text-align: center;
+        color: #464646;
+        margin: 0 auto;
+        padding: 0;
         width: calc(100% - 80px);
-        padding: 0px 40px;
-        font-size: 18px;
-        text-align: left;
-    }
-    ol {
-        font-weight: bold;
-        margin: 25px auto;
-        line-height: 20px;
-        text-align: left;
-        padding: 0px 60px;
-        font-size: 20px;
-        li {
-            margin: 10px 0;
-            line-height: 32px;
+        min-width: 240px;
+        strong {
+            font-weight: bold;
+            font-style: italic;
         }
     }
 `
 
-const Instructions = ({ english, setShowInstructions }) => {
+const Instructions = ({ english, setShowInstructions, setEnglish }) => {
     return (
         <StyledInstructions>
-            <h4>
-                {english ? "Easily generate an" : "Générez facilement votre"}
-            </h4>
-            <h3>
-                Attestation de Deplacement Derogatoire
-            </h3>
-            <ol>
-                <li>
-                    {english ? "Save your identity details" : "Enregistrez vos données d'identité"}
-                </li>
-                <li>
-                    {english ? "Choose your reason to be out" : "Choisissez votre raison de sortir"}
-                </li>
-            </ol>
             <p>
-                {english ? "Your attestation is saved automatically to your device. And the next time you need one, you can skip step 1!" : "Votre attestation est enregistrée automatiquement sur votre appareil. Et la prochaine fois que vous en aurez besoin, vous pourrez sauter la première étape !"}
+                Generate your <br />
+                <strong>Attestation de deplacement derogatoire</strong>
+            </p>
+            <h1>
+                SUPER FAST.
+            </h1>
+            <p>
+                You only enter your info <strong>once</strong>. Afterwards, you can simply create an Attestation in <strong>one tap</strong>
+            </p>
+            <h1>
+                TOTAL PRIVACY.
+            </h1>
+            <p>
+                Your info is <strong>only</strong> stored on <strong>your device</strong> and not sent to <strong>anyone</strong>
             </p>
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
-                {english ? "Got It" : "D'accord"}
+                {english ? 
+                    "Get Started" : 
+                    "Get Started"
+                }
             </StyledButton>
-            <FAQ english={english} />
+            <FAQ english={english} setEnglish={setEnglish} />
         </StyledInstructions>
     )
 }

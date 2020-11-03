@@ -8,17 +8,17 @@ import Info from './Info'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
 import Instructions from './Instructions'
+import Header from './Header'
 import StyledHeaderBar from './styles/StyledHeaderBar'
 const StyledContainer = styled.div`
         text-align: center;
-        font-family: 'Merriweather', serif;
+        font-family: 'Roboto', sans-serif;
+        color: #303030;
         min-height: 568px;
         max-width: 450px;
         height: 100vh;
         width: 100vw;
-        overflow: hidden;
         position: relative;
-        background-color: #EEE;
     `
 const StyledLangSelector = styled.div`
     width: 88px;
@@ -86,7 +86,7 @@ const App = () => {
     const [lastname, setLastname] = useState("")
     const [placeofbirth, setPlaceofbirth] = useState("")
     const [zipcode, setZipcode] = useState("")
-    const [english, setEnglish] = useState(false)
+    const [english, setEnglish] = useState(true)
     const [showData, setShowData] = useState(false)
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
@@ -251,57 +251,56 @@ const App = () => {
     
     return (
         <StyledContainer>
-            <StyledHeaderBar>
-                <div onClick={() => setShowData(true)}>
-                    {showInstructions || showData || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
-                </div>
-                <StyledLangSelector onClick={updateLanguage}>
-                    <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
-                    <StyledLangButton src="/united-kingdom-flag-round-icon-32.png" currentLanguage={english} /> 
-                </StyledLangSelector>
-            </StyledHeaderBar>
-
-            
-            
-            { showData ? 
-                <MyData english={english}  
-                        firstname={firstname}
-                        lastname={lastname}
-                        birthday={birthday}
-                        placeofbirth={placeofbirth}
-                        address={address}
-                        city={city}
-                        zipcode={zipcode}
-                        setFirstname={setFirstname}
-                        setLastname={setLastname}
-                        updateBirthday={updateBirthday}
-                        setPlaceofbirth={setPlaceofbirth}
-                        setAddress={setAddress}
-                        setCity={setCity}
-                        setZipcode={setZipcode}
-                        updateData={updateData} /> 
-            : showInfo !== "" ? 
-                <Info english={english} showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
-            : 
-                <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
-            }
-
-            {showInstructions ? <Instructions english={english} setShowInstructions={setShowInstructions} /> : ""}
-            
-            <StyledFooterBar>
-                {!showInstructions ? <StyledHowToLink>
-                    <span onClick={() => setShowInstructions(true)}>
-                        <img src="/favicon-16x16.png" /> {english ? "How to use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
-                    </span>
-                </StyledHowToLink> : ""}
-            </StyledFooterBar>
-            {downloading ? 
-                <StyledConfirmation>
-                    {english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."}
-                </StyledConfirmation> : ""
-            }
+            <Header english={english}
+                showInstructions={showInstructions} 
+                setShowInstructions={setShowInstructions} />
+            {showInstructions ? <Instructions english={english} setShowInstructions={setShowInstructions} setEnglish={setEnglish} /> : ""}
         </StyledContainer>
     );
 }
 
 export default App;
+
+{/* <StyledLangSelector onClick={updateLanguage}>
+    <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
+    <StyledLangButton src="/united-kingdom-flag-round-icon-32.png" currentLanguage={english} /> 
+</StyledLangSelector> */}
+
+{/* { showData ? 
+    <MyData english={english}  
+            firstname={firstname}
+            lastname={lastname}
+            birthday={birthday}
+            placeofbirth={placeofbirth}
+            address={address}
+            city={city}
+            zipcode={zipcode}
+            setFirstname={setFirstname}
+            setLastname={setLastname}
+            updateBirthday={updateBirthday}
+            setPlaceofbirth={setPlaceofbirth}
+            setAddress={setAddress}
+            setCity={setCity}
+            setZipcode={setZipcode}
+            updateData={updateData} /> 
+: showInfo !== "" ? 
+     
+            <Info english={english} showInfo={showInfo} info={info} setShowInfo={setShowInfo} />
+: 
+    <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
+} */}
+
+{/*  */}
+
+{/* <StyledFooterBar>
+    {!showInstructions ? <StyledHowToLink>
+        <span onClick={() => setShowInstructions(true)}>
+            <img src="/favicon-16x16.png" /> {english ? "How to use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
+        </span>
+    </StyledHowToLink> : ""}
+</StyledFooterBar> */}
+{/* {downloading ? 
+    <StyledConfirmation>
+        {english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."}
+    </StyledConfirmation> : ""
+} */}

@@ -1,27 +1,53 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 
-const StyledQuestion = styled.h5`
+const StyledFAQ = styled.section`
+    padding-top: 8px;
+    padding-bottom: 40px;
     background-color: #fff;
-    text-align: left;
-    width: calc(100% - 60px);
-    margin: 25px auto 10px;
-    padding: 10px;
-    color: #3c70e0;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 18px;
+    margin-top: 20px;
 `
-const StyledAnswer = styled.div`
-    width: calc(100% - 60px);
-    padding: 0px 20px 0 40px;
+const StyledLangLink = styled.div`
+    width: calc(100% - 20px);
+    margin: 10px auto 30px;
+    background-color: #C2F39C;
+    color: #2A5508;
+    text-align: center;
     font-size: 16px;
-    line-height: 24px;
-    text-align: left;
+    line-height: 20px;
+    padding: 20px 0;
+    span {
+        cursor: pointer;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+`
+const StyledQA = styled.div`
+    border-bottom: solid 1px #EDEDED;
+    width: calc(100% - 60px);
+    margin: auto;
+    padding: 10px 0;
+    h5 {
+        text-align: left;
+        width: 100%;
+        margin: 10px auto;
+        /* padding: 10px; */
+        color: #3c70e0;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    div {
+        width: calc(100% - 60px);
+        padding: 0px 20px 10px 40px;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: left;
+    }
 `
 
 
-const FAQ = ({english}) => {
+const FAQ = ({english, setEnglish}) => {
     const frequentlyAskedQuestions = [
         {
             visible: false,
@@ -30,7 +56,7 @@ const FAQ = ({english}) => {
                 a() {return <span>Sortir.io is a quick attestation generator to help you when you need to go out during lockdown in France. You only need to enter your identity details once. Then each time you return, just tap on the reason you're going out and an attestation will be generated immediately.</span>},
             },
             fr: {
-                q: "Qu'est-ce que Sortir.io ?",
+                q: "Qu'est-ce que c'est, Sortir.io ?",
                 a() {return <span>Sortir.io est un générateur d'attestations rapide pour vous aider lorsque vous devez sortir pendant un lockdown en France. Vous n'avez à saisir vos données d'identité qu'une seule fois. Ensuite, à chaque retour, il vous suffit d'appuyer sur le motif vous sortez et une attestation sera générée immédiatement. </span>}
             }
         },
@@ -41,7 +67,7 @@ const FAQ = ({english}) => {
                 a() {return <span>Nobody can see your information except you. Data is only stored in your phone's web browser, and never transmitted to a server.</span>}
             },
             fr: {
-                q: `Est-ce sûr? Qui peut voir mes informations?`,
+                q: `Est-ce securisé? Qui peut voir mes informations?`,
                 a() {return <span>Personne ne peut voir vos informations sauf vous. Les données ne sont stockées que dans le navigateur Web de votre téléphone et ne sont jamais transmises à un serveur.</span>}
             }
         },
@@ -148,18 +174,22 @@ const FAQ = ({english}) => {
         setFaq(newFaq)
     }
     return (
-        <div style={{"paddingBottom": "60px"}}>
-            {faq.map(entry => <div> 
-                <StyledQuestion onClick={() => toggleFaq(JSON.stringify(entry))}>
-                    {entry[lang].q}
-                </StyledQuestion> 
+        <StyledFAQ>
+            {english ? 
+                <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(false)}>French</span></StyledLangLink> :
+                <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(true)}>English</span></StyledLangLink> }
+            {faq.map(entry => 
+                <StyledQA> 
+                    <h5 onClick={() => toggleFaq(JSON.stringify(entry))}>
+                        {entry[lang].q}
+                    </h5> 
                 { entry.visible ? 
-                    <StyledAnswer>
+                    <div>
                         {entry[lang].a()}
-                    </StyledAnswer> : ""}
-                </div>
+                    </div> : ""}
+                </StyledQA>
             )}
-        </div>
+        </StyledFAQ>
     )
 }
 
