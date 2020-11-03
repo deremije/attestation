@@ -90,6 +90,7 @@ const App = () => {
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
+    const [openPDF, setOpenPDF] = useState(true)
 
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
@@ -169,14 +170,8 @@ const App = () => {
     }
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
-
-        const creationInstant = new Date()
-        const creationDate = creationInstant.toLocaleDateString('fr-CA')
-        const creationHour = creationInstant
-        .toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        .replace(':', '-')
-
-        downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
+        downloadBlob(pdfBlob, `attestation-sortir-io.pdf`)
+        if (openPDF) window.open(URL.createObjectURL(pdfBlob))
     }
     const info = {
         "Travail": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
