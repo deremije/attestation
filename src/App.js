@@ -90,7 +90,6 @@ const App = () => {
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
-    
 
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
@@ -139,7 +138,6 @@ const App = () => {
             setBirthday(e.target.value)
         }
     }
-    
     const attemptPDF = (reason) => {
         if (allFieldsValidated) {
             let profile = {
