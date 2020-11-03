@@ -5,7 +5,7 @@ const StyledSection = styled.section`
     top: 0px;
     left: 0px;
     width: 100%;
-    height: calc(100% - 92px);
+    height: calc(100% - 112px);
     padding-bottom: 0px;
     background-color: #eee;
     overflow-y: auto;

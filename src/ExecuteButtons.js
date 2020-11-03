@@ -3,7 +3,7 @@ import StyledTitle from './styles/StyledTitle'
 
 const StyledReasonButtons = styled.div`
     width: 100%;
-    height: calc(100% - 92px);
+    height: calc(100% - 112px);
     display: flex;
     flex-direction: column;
     position: relative;

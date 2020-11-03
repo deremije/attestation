@@ -35,6 +35,7 @@ const StyledFooterBar = styled(StyledHeaderBar)`
     display: block;
     height: 30px;
     line-height: 30px;
+    padding-bottom: 20px;
 `
 const StyledConfirmation = styled.div`
     position: absolute;
@@ -170,13 +171,7 @@ const App = () => {
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
 
-        const creationInstant = new Date()
-        const creationDate = creationInstant.toLocaleDateString('fr-CA')
-        const creationHour = creationInstant
-        .toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        .replace(':', '-')
-
-        downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
+        downloadBlob(pdfBlob, `attestation-sortir-io.pdf`)
     }
     const info = {
         "Travail": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",

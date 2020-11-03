@@ -14,15 +14,15 @@ const StyledInstructions = styled.div`
     padding-bottom: 0px;
     font-family: 'Monserrat', sans-serif;
     h3 {
-        padding: 20px 10px 0;
+        padding: 10px 10px 20px;
         margin: 0;
         font-size: 26px;
+        font-family: 'Merriweather', serif;
     }
     h4 {
         margin: 0;
-        padding: 10px 10px 20px;
-        font-family: 'Merriweather', serif;
-        font-size: 22px;
+        padding: 20px 10px 0;
+        font-size: 18px;
     }
     p {
         width: calc(100% - 80px);
@@ -45,15 +45,14 @@ const StyledInstructions = styled.div`
 `
 
 const Instructions = ({ english, setShowInstructions }) => {
-    
     return (
         <StyledInstructions>
-            <h3>
-                {english ? "Easily generate an" : "Facilement générez votre"}
-            </h3>
             <h4>
-                Attestation de Deplacement Derogatoire
+                {english ? "Easily generate an" : "Générez facilement votre"}
             </h4>
+            <h3>
+                Attestation de Deplacement Derogatoire
+            </h3>
             <ol>
                 <li>
                     {english ? "Save your identity details" : "Enregistrez vos données d'identité"}
