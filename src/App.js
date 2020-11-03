@@ -91,6 +91,7 @@ const App = () => {
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
+    const [openPDF, setOpenPDF] = useState(true)
 
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
