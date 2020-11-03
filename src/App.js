@@ -301,7 +301,7 @@ const App = () => {
             </StyledFooterBar>
             {downloading ? 
                 <StyledConfirmation>
-                    {english ? "Downloading your attestation.  Please remember to wear your mask." : "Téléchargement de votre attestation.  SVP, ne pas oublier votre masque."}
+                    {english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."}
                 </StyledConfirmation> : ""
             }
         </StyledContainer>
