@@ -7,19 +7,21 @@ import styled from 'styled-components'
 import Info from './Info'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
+import MainNavigation from "./MainNavigation"
 import Instructions from './Instructions'
 import Header from './Header'
 import StyledHeaderBar from './styles/StyledHeaderBar'
 const StyledContainer = styled.div`
-        text-align: center;
-        font-family: 'Roboto', sans-serif;
-        color: #303030;
-        min-height: 568px;
-        max-width: 450px;
-        height: 100vh;
-        width: 100vw;
-        position: relative;
-    `
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #303030;
+    min-height: 568px;
+    max-width: 450px;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+`
 const StyledLangSelector = styled.div`
     width: 88px;
     margin-right: -6px;
@@ -90,9 +92,13 @@ const App = () => {
     const [showData, setShowData] = useState(false)
     const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
-    const [showInstructions, setShowInstructions] = useState(false)
     const [openPDF, setOpenPDF] = useState(true)
-
+    const [showReasons, setShowReasons] = useState(false)
+    const [mainTransition, setMainTransition] = useState(false)
+    const [instructionsTransition, setInstructionsTransition] = useState(false)
+    const [showInstructions, setShowInstructions] = useState(true)
+    const [showMain, setShowMain] = useState(false)
+    
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
         
@@ -106,7 +112,6 @@ const App = () => {
             setPlaceofbirth(personalInfo.placeofbirth) 
             setZipcode(personalInfo.zipcode)
         } else {
-            setShowData(true)
             setShowInstructions(true)
         }
     }, [])
@@ -248,13 +253,46 @@ const App = () => {
             emoji: "🩺",
         },
     ]
+    const transitionToInstructions = () => {
+        setShowInstructions(true)
+        setShowMain(false)
+    }
+    const transitionToMain = () => {
+        setShowMain(true)
+        setShowInstructions(false)
+    }
     
     return (
         <StyledContainer>
             <Header english={english}
                 showInstructions={showInstructions} 
-                setShowInstructions={setShowInstructions} />
-            {showInstructions ? <Instructions english={english} setShowInstructions={setShowInstructions} setEnglish={setEnglish} /> : ""}
+                transitionToInstructions={transitionToInstructions} />
+        {showInstructions ? <Instructions transitionToMain={transitionToMain} english={english} setEnglish={setEnglish} /> : ""}
+        {showMain ? 
+        <MainNavigation english={english} 
+            setEnglish={setEnglish}
+            showData={showData}
+            setShowData={setShowData}
+            showReasons={showReasons}
+            setShowReasons={setShowReasons} 
+            allFieldsValidated={allFieldsValidated}
+            updateData={updateData}
+            updateBirthday={updateBirthday}
+            mainTransition={mainTransition}
+            updateBirthday={updateBirthday}
+            firstname={firstname}
+            lastname={lastname}
+            birthday={birthday}
+            placeofbirth={placeofbirth}
+            address={address}
+            city={city}
+            zipcode={zipcode}
+            setFirstname={setFirstname}
+            setLastname={setLastname}
+            setPlaceofbirth={setPlaceofbirth}
+            setAddress={setAddress}
+            setCity={setCity}
+            setZipcode={setZipcode} /> : "" }
         </StyledContainer>
     );
 }

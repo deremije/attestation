@@ -25,7 +25,7 @@ const StyledSectionHeader = styled(StyledHeaderBar)`
 `
 
 
-const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, updateBirthday, setPlaceofbirth, setAddress, setCity, setZipcode, updateData }) => {
+const MyData = ({ updateBirthday, updateData, english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const birthdayValid = () => {
         return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
     }
@@ -62,12 +62,12 @@ const MyData = ({ english, firstname, lastname, birthday, placeofbirth, address,
                 
                 
             </form>
-            <StyledButton type="button" onClick={updateData}>
+            {/* <StyledButton type="button" onClick={updateData}>
                 {english ? "Save" : "Suivant"}
-            </StyledButton>
+            </StyledButton> */}
             <p className="indent">
                 {english ? 
-                    "Identity details are stored locally and never transmitted to anyone" : 
+                    "Identity details are stored locally on your device and never uploaded or transmitted to anyone" : 
                     "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
             </p>
         </StyledSection>

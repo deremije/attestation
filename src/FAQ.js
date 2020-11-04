@@ -179,7 +179,7 @@ const FAQ = ({english, setEnglish}) => {
                 <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(false)}>French</span></StyledLangLink> :
                 <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(true)}>English</span></StyledLangLink> }
             {faq.map(entry => 
-                <StyledQA> 
+                <StyledQA key={JSON.stringify(entry)}> 
                     <h5 onClick={() => toggleFaq(JSON.stringify(entry))}>
                         {entry[lang].q}
                     </h5> 

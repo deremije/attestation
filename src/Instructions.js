@@ -9,6 +9,15 @@ const StyledInstructions = styled.div`
     overflow-y: auto;
     width: 100%;
     padding-top: 30px;
+    /* animation: slide_in_right 200ms linear;
+    @keyframes slide_in_right {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+    }
+    @keyframes slide_out_left {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    } */
     h1 {
         font-size: 32px;
         line-height: 40px;
@@ -35,26 +44,26 @@ const StyledInstructions = styled.div`
     }
 `
 
-const Instructions = ({ english, setShowInstructions, setEnglish }) => {
+const Instructions = ({ instructionsTransition, english, transitionToMain, setEnglish }) => {
     return (
-        <StyledInstructions>
+        <StyledInstructions transition={instructionsTransition}>
             <p>
                 Generate your <br />
                 <strong>Attestation de deplacement derogatoire</strong>
             </p>
             <h1>
-                SUPER FAST.
+                SUPER FAST
             </h1>
             <p>
                 You only enter your info <strong>once</strong>. Afterwards, you can simply create an Attestation in <strong>one tap</strong>
             </p>
             <h1>
-                TOTAL PRIVACY.
+                TOTAL PRIVACY
             </h1>
             <p>
                 Your info is <strong>only</strong> stored on <strong>your device</strong> and not sent to <strong>anyone</strong>
             </p>
-            <StyledButton type="button" onClick={() => setShowInstructions(false)}>
+            <StyledButton type="button" onClick={transitionToMain}>
                 {english ? 
                     "Get Started" : 
                     "Get Started"

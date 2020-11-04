@@ -11,25 +11,27 @@ const StyledHeader = styled.header`
     }
 `
 const StyledInfoIcon = styled.div`
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     position: absolute;
-    top: 8px;
+    top: 13px;
     left: 28px;
     border-radius: 50%;
     border: solid 2px #303030;
     font-size: 16px;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
 `
 
-const Header = ({ showInstructions, setShowInstructions, english }) => {
+const Header = ({ transitionToInstructions, showInstructions, english }) => {
+    
     return (
         <StyledHeader>
             <h2>
-                SORTIR.IO
+                {/* SORTIR.IO */}
+                <img src="logo.svg"/>
             </h2>
-            {!showInstructions ? <StyledInfoIcon onClick={() => setShowInstructions(true)}>i</StyledInfoIcon> : ""}
+            {!showInstructions ? <StyledInfoIcon onClick={transitionToInstructions}>i</StyledInfoIcon> : ""}
         </StyledHeader>
     )
 }

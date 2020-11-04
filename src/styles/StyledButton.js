@@ -12,7 +12,7 @@ const StyledButton = styled.button`
     background-color: #205DDB;
     color: #fff;
     border-radius: 8px;
-    margin: 20px auto;
+    margin: 40px auto 20px;
     cursor: pointer;
     border: none;
     text-transform: uppercase;
