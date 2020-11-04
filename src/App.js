@@ -171,8 +171,8 @@ const App = () => {
     }
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
-
-        downloadBlob(pdfBlob, `attestation-sortir-io.pdf`)
+        const timestamp = new Date().toLocaleDateString('fr-FR').substring(0,10) + "-" + new Date().toLocaleTimeString('fr-FR')
+        downloadBlob(pdfBlob, `attestation-sortir-io-${timestamp}.pdf`)
     }
     const info = {
         "Travail": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
