@@ -15,23 +15,24 @@ const StyledInfoIcon = styled.div`
     width: 30px;
     position: absolute;
     top: 13px;
-    left: 28px;
+    left: 15px;
     border-radius: 50%;
     border: solid 2px #303030;
     font-size: 16px;
     text-align: center;
     line-height: 30px;
+    transform: translateX(${props => props.showInstructions ? "-72px" : "0"});
+    transition: all 200ms linear;
 `
 
-const Header = ({ transitionToInstructions, showInstructions, english }) => {
+const Header = ({ setShowInstructions, showInstructions, english }) => {
     
     return (
         <StyledHeader>
             <h2>
-                {/* SORTIR.IO */}
                 <img src="logo.svg"/>
             </h2>
-            {!showInstructions ? <StyledInfoIcon onClick={transitionToInstructions}>i</StyledInfoIcon> : ""}
+            <StyledInfoIcon showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
         </StyledHeader>
     )
 }

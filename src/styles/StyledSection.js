@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 const StyledSection = styled.section`
     position: relative;
-    top: 60px;
-    left: 0px;
     width: 100%;
     height: calc(100% - 112px);
     padding-bottom: 0px;

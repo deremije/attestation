@@ -1,73 +1,66 @@
 import styled from 'styled-components'
-import StyledTitle from './styles/StyledTitle'
 
 const StyledReasonButtons = styled.div`
     width: 100%;
-    height: calc(100% - 112px);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     position: relative;
+    transition: all 200ms;
+    height: ${props => props.showReasons ? "calc(100% - 120px)" : "0"};
     button {
-        display: grid;
-        grid-template-columns: 50px 1fr 40px;
-        width: calc(100% - 40px);
-        padding: 0 20px 2px;
-        border: none;
-        border-bottom: solid 1px #AAA;
-        margin: 3px auto;
-        height: 10%;
+        display: flex;
+        width: calc(100vw / 3);
+        height: calc(100vw / 3);
+        border: solid 1px transparent;
         position: relative;
-        font-size: 20px;
         font-weight: 400;
-        font-family: 'Merriweather', serif;
-        text-align: left;
-        background-color: transparent;
+        text-align: center;
+        cursor: pointer;
         div {
-            height: 24px;
-            line-height: 24px;
+            margin: auto;
+            height: 62px;
+            line-height: 42px;
+            font-size: 30px;
             position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
             span {
-                width: 14px;
-                height: 14px;
-                border: solid 2px gray;
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                position: relative;
-                top: 50%;
-                left: 50%;
-                color: gray;
-                font-size: 10px;
-                font-weight: bold;
-                line-height: 14px;
-                text-align: center;
+                height: 20px;
                 display: block;
+                line-height: 20px;
+                font-size: 14px;
+                font-weight: bold;
             }
         }
+        
     }
 `
+const StyledInfoLink = styled.div`
+    height: auto;
+    line-height: calc(100vh - 100vw - 180px);
+    text-align: center;
+    font-size: 16px;
+    color: blue;
+    text-decoration: underline;
+    grid-column: 1 / span 3;
+    background-color: #eee;
+`
 
-const ExecuteButtons = ({ buttons, english, attemptPDF, setShowInfo }) => {
+const ExecuteButtons = ({ reasons, setShowDescriptions, english, attemptPDF, setShowInfo, showReasons }) => {
+    
     return (
-        <StyledReasonButtons>
-            <StyledTitle>
-                {english ? "Choose your reason to go out" : "Choisissez votre motif pour sortir"}
-            </StyledTitle>
-            {buttons.map(b => 
-                <button>
-                    <div onClick={() => attemptPDF(b.reason)}>
-                        {b.emoji}
-                    </div>
-                    <div onClick={() => attemptPDF(b.reason)}>
-                        {english ? b.english : b.french}
-                    </div>
+        <StyledReasonButtons showReasons={showReasons}>
+            {reasons.map(b => 
+                <button onClick={() => attemptPDF(b.reason)}>
                     <div>
-                        <span className='info' onClick={() => setShowInfo(b.french)}>i</span>
+                        {b.emoji}
+                        <span>
+                            {english ? b.english : b.french}
+                        </span>
                     </div>
                 </button>
             )}
+            <StyledInfoLink onClick={() => setShowDescriptions(true)}>
+                Which reason should I choose?
+            </StyledInfoLink>
         </StyledReasonButtons>
     )
 }

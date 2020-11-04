@@ -1,31 +1,36 @@
-import { useState, useEffect } from 'react'
 import StyledSection from './styles/StyledSection'
 import styled from 'styled-components'
-import StyledHeaderBar from './styles/StyledHeaderBar'
-import StyledButton from './styles/StyledButton'
 
-const StyledSectionHeader = styled(StyledHeaderBar)`
-    text-align: right;
-    height: 30px;
-    line-height: 30px;
-    font-size: 14px;
-    padding-top: 10px;
-    text-decoration: none;
-    h1 {
-        font-family: 'Montserrat', sans-serif;
-        line-height: 30px;
-        font-size: 16px;
-        font-weight: bold;
-        width: calc(100% - 40px);
-        color: #1a1a1a;
-        text-align: left;
-        margin: 0;
-        padding: 0;
+const StyledDataForm = styled(StyledSection)`
+    transition: all 200ms;
+    height: ${props => props.showData ? "calc(100% - 120px)" : "0"};
+`
+const StyledLangSelector = styled.div`
+    width: 100%;
+    padding: 20px 0;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    position: relative;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+`
+const StyledLangButton = styled.div`
+    font-weight: ${props => props.currentLanguage ? "bold" : "normal"};
+    padding: 0 5px;
+    img {
+        margin: ${props => props.currentLanguage ? "1px 3px" : "3px 5px"};
+        border: ${props => props.currentLanguage ? "solid 2px #1a1a1a" : "none"};
+        padding: 1px;
+        border-radius: 50%;
+        position: relative;
+        vertical-align: middle;
     }
 `
 
 
-const MyData = ({ updateBirthday, updateData, english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
+const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const birthdayValid = () => {
         return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
     }
@@ -33,10 +38,11 @@ const MyData = ({ updateBirthday, updateData, english, firstname, lastname, birt
         return zipcode.length === 0 || zipcode.length === 5 ? "" : "error"
     }
     return (
-        <StyledSection>
-            <StyledSectionHeader>
-                <h1>{english ? "My Identity Details" : "Mes données"}</h1>
-            </StyledSectionHeader>
+        <StyledDataForm showData={showData}>
+            <StyledLangSelector>
+                <StyledLangButton currentLanguage={!english} onClick={() => english && updateLanguage()}>Français <img src="/france-flag-round-icon-32.png" /></StyledLangButton>
+                <StyledLangButton currentLanguage={english} onClick={() => !english && updateLanguage()}>English <img src="/united-kingdom-flag-round-icon-32.png" /></StyledLangButton>
+            </StyledLangSelector>
             <form autoComplete="off">
                 <label>
                     {english ? "First Name" : "Prénom"} <input type="text" value={firstname} placeholder="Emmanuel" onChange={e => setFirstname(e.target.value)} />
@@ -58,19 +64,14 @@ const MyData = ({ updateBirthday, updateData, english, firstname, lastname, birt
                 </label>
                 <label>
                     {english ? "Postal Code (5 digits)" : "Code postal (5 chiffres)"} <input type="number" step='0' value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
-                </label>
-                
-                
+                </label>               
             </form>
-            {/* <StyledButton type="button" onClick={updateData}>
-                {english ? "Save" : "Suivant"}
-            </StyledButton> */}
             <p className="indent">
                 {english ? 
                     "Identity details are stored locally on your device and never uploaded or transmitted to anyone" : 
                     "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
             </p>
-        </StyledSection>
+        </StyledDataForm>
     )
 }
 

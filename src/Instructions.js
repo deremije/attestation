@@ -4,20 +4,15 @@ import StyledButton from './styles/StyledButton'
 import FAQ from './FAQ'
 
 const StyledInstructions = styled.div`
-    position: relative;
+    position: absolute;
+    top: 60px;
     background-color: #eee;
     overflow-y: auto;
     width: 100%;
     padding-top: 30px;
-    /* animation: slide_in_right 200ms linear;
-    @keyframes slide_in_right {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
-    }
-    @keyframes slide_out_left {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-    } */
+    height: calc(100% - 60px);
+    transition: all 200ms linear;
+    transform: translateX(${props => props.showInstructions ? "0" : "-100%"});
     h1 {
         font-size: 32px;
         line-height: 40px;
@@ -44,9 +39,9 @@ const StyledInstructions = styled.div`
     }
 `
 
-const Instructions = ({ instructionsTransition, english, transitionToMain, setEnglish }) => {
+const Instructions = ({ showInstructions, setShowInstructions, english, setEnglish }) => {
     return (
-        <StyledInstructions transition={instructionsTransition}>
+        <StyledInstructions showInstructions={showInstructions}>
             <p>
                 Generate your <br />
                 <strong>Attestation de deplacement derogatoire</strong>
@@ -63,7 +58,7 @@ const Instructions = ({ instructionsTransition, english, transitionToMain, setEn
             <p>
                 Your info is <strong>only</strong> stored on <strong>your device</strong> and not sent to <strong>anyone</strong>
             </p>
-            <StyledButton type="button" onClick={transitionToMain}>
+            <StyledButton type="button" onClick={() => setShowInstructions(false)}>
                 {english ? 
                     "Get Started" : 
                     "Get Started"
