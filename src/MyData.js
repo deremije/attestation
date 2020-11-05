@@ -68,7 +68,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
             </form>
             <p className="indent">
                 {english ? 
-                    "Identity details are stored locally on your device and never uploaded or transmitted to anyone" : 
+                    "Identity details are stored only on your device and never uploaded" : 
                     "Les détails d'identité sont stockés localement et ne sont jamais transmis à personne"}
             </p>
         </StyledDataForm>

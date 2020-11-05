@@ -20,10 +20,10 @@ const StyledInstructions = styled.div`
         letter-spacing: 1.25px;
         color: #205ddb;
         text-align: center;
-        margin: 40px 0 10px 0;
+        margin: 30px 0 6px 0;
         padding: 0;
     }
-    p {
+    p, h4 {
         font-size: 16px;
         line-height: 22px;
         text-align: center;
@@ -32,36 +32,40 @@ const StyledInstructions = styled.div`
         padding: 0;
         width: calc(100% - 80px);
         min-width: 240px;
+        font-weight: normal;
         strong {
             font-weight: bold;
             font-style: italic;
         }
+    }
+    h4 {
+        font-size: 14px;
     }
 `
 
 const Instructions = ({ showInstructions, setShowInstructions, english, setEnglish }) => {
     return (
         <StyledInstructions showInstructions={showInstructions}>
-            <p>
+            <h4>
                 Generate your <br />
                 <strong>Attestation de deplacement derogatoire</strong>
-            </p>
+            </h4>
             <h1>
                 SUPER FAST
             </h1>
             <p>
-                You only enter your info <strong>once</strong>. Afterwards, you can simply create an Attestation in <strong>one tap</strong>
+                Enter your info just <strong>once</strong>. Then, create an Attestation in just <strong>one tap</strong>
             </p>
             <h1>
                 TOTAL PRIVACY
             </h1>
             <p>
-                Your info is <strong>only</strong> stored on <strong>your device</strong> and not sent to <strong>anyone</strong>
+                Your info is <strong>only</strong> stored on <strong>your device</strong> and never sent to <strong>anyone</strong>
             </p>
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
                 {english ? 
-                    "Get Started" : 
-                    "Get Started"
+                    "Let's Go" : 
+                    "On Y Va"
                 }
             </StyledButton>
             <FAQ english={english} setEnglish={setEnglish} />

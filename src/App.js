@@ -14,9 +14,15 @@ const StyledContainer = styled.div`
     min-height: 568px;
     max-width: 450px;
     height: 100vh;
+    min-height: 100%;
     width: 100vw;
+    box-sizing: border-box;
     position: relative;
     overflow-x: hidden;
+    overflow-y: hidden;
+    h1 {
+        font-size: 24px;
+    }
 `
 
 const StyledConfirmation = styled.div`

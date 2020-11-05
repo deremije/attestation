@@ -147,7 +147,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
     
     return (
         <StyledMain>
-            <StyledInfoButton showReasons={showReasons} showData={showData} allFieldsValidated={allFieldsValidated()} onClick={() => expandData()}>
+            <StyledInfoButton showReasons={showReasons} showData={showData} allFieldsValidated={allFieldsValidated()} onClick={() => allFieldsValidated() && !showReasons ? expandReasons() : expandData()}>
                 <span>{showReasons ? "Your Info" : "Enter your info"}</span>
             </StyledInfoButton>
             

@@ -4,10 +4,13 @@ const StyledHeader = styled.header`
     height: 60px;
     display: flex;
     background-color: #fff;
-    h2 {
+    img {
+        display: block;
         margin: auto;
-        font-size: 16px;
-        font-weight: bold;
+        height: 24px;
+        width: auto;
+        position: relative;
+        top: -1px;
     }
 `
 const StyledInfoIcon = styled.div`
@@ -18,7 +21,7 @@ const StyledInfoIcon = styled.div`
     left: 15px;
     border-radius: 50%;
     border: solid 2px #303030;
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
     line-height: 30px;
     transform: translateX(${props => props.showInstructions ? "-72px" : "0"});
@@ -29,9 +32,7 @@ const Header = ({ setShowInstructions, showInstructions, english }) => {
     
     return (
         <StyledHeader>
-            <h2>
-                <img src="logo.svg"/>
-            </h2>
+            <img src="logo.svg"/>
             <StyledInfoIcon showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
         </StyledHeader>
     )

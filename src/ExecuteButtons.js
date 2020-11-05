@@ -6,16 +6,18 @@ const StyledReasonButtons = styled.div`
     grid-template-columns: repeat(3, 1fr);
     position: relative;
     transition: all 200ms;
+    background-color: #eee;
     height: ${props => props.showReasons ? "calc(100% - 120px)" : "0"};
     button {
         display: flex;
         width: calc(100vw / 3);
         height: calc(100vw / 3);
-        border: solid 1px transparent;
+        border: none;
         position: relative;
         font-weight: 400;
         text-align: center;
         cursor: pointer;
+        background-color: transparent;
         div {
             margin: auto;
             height: 62px;
@@ -34,8 +36,8 @@ const StyledReasonButtons = styled.div`
     }
 `
 const StyledInfoLink = styled.div`
-    height: auto;
-    line-height: calc(100vh - 100vw - 180px);
+    height: 60px;
+    line-height: 60px;
     text-align: center;
     font-size: 16px;
     color: blue;

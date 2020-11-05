@@ -38,8 +38,8 @@ const StyledQA = styled.div`
         font-size: 18px;
     }
     div {
-        width: calc(100% - 60px);
-        padding: 0px 20px 10px 40px;
+        width: calc(100% - 20px);
+        padding: 0px 20px 10px 0px;
         font-size: 16px;
         line-height: 24px;
         text-align: left;
@@ -63,8 +63,8 @@ const FAQ = ({english, setEnglish}) => {
         {
             visible: false,
             en: {
-                q: `Is this safe? Who can see my information?`,
-                a() {return <span>Nobody can see your information except you. Data is only stored in your phone's web browser, and never transmitted to a server.</span>}
+                q: `Is this secure? Who can see my information?`,
+                a() {return <span>Nobody can see your information except you, because it is only stored in your phone's web browser. No data is collected by Sortir.io.</span>}
             },
             fr: {
                 q: `Est-ce securisé? Qui peut voir mes informations?`,
@@ -134,11 +134,11 @@ const FAQ = ({english, setEnglish}) => {
             visible: false,
             en: {
                 q: `Who made Sortir.io?`,
-                a() {return <span>Sortir.io was created and is maintained by <a href="https://jeremyrandall.dev">Jeremy Randall</a>, a web developer in Lyon.</span>}
+                a() {return <span>Sortir.io was created and is maintained by <a href="https://jeremyrandall.dev">Jeremy Randall</a>, a web developer in Lyon. UX and UI design by <a href="https://shannou.com">Shannon Randall</a>.</span>}
             },
             fr: {
                 q: `Qui a créé Sortir.io ?`,
-                a() {return <span>Sortir.io a été créé et est maintenu par <a href="https://jeremyrandall.dev">Jeremy Randall</a>, un développeur web à Lyon.</span>}
+                a() {return <span>Sortir.io a été créé et est maintenu par <a href="https://jeremyrandall.dev">Jeremy Randall</a>, un développeur web à Lyon. UX et UI design par <a href="https://shannou.com">Shannon Randall</a>.</span>}
             }
         },
         {
