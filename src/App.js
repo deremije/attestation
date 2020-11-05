@@ -23,6 +23,12 @@ const StyledContainer = styled.div`
     h1 {
         font-size: 24px;
     }
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        color: #3c70e0;
+    }
 `
 
 const StyledConfirmation = styled.div`

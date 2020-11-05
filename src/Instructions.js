@@ -30,7 +30,7 @@ const StyledInstructions = styled.div`
         color: #464646;
         margin: 0 auto;
         padding: 0;
-        width: calc(100% - 80px);
+        width: calc(100% - 60px);
         min-width: 240px;
         font-weight: normal;
         strong {
@@ -54,7 +54,7 @@ const Instructions = ({ showInstructions, setShowInstructions, english, setEngli
                 SUPER FAST
             </h1>
             <p>
-                Enter your info just <strong>once</strong>. Then, create an Attestation in just <strong>one tap</strong>
+                Enter your info just <strong>once</strong>. Then, create an Attestation in <strong>one tap</strong>
             </p>
             <h1>
                 TOTAL PRIVACY
