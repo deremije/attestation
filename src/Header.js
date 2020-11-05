@@ -12,6 +12,16 @@ const StyledHeader = styled.header`
         position: relative;
         top: -1px;
     }
+    .back {
+        position: absolute;
+        height: 24px;
+        padding: 10px;
+        top: 10px;
+        right: 8px;
+        width: auto;
+        transition: all 200ms linear;
+        transform: translateX(${props => props.showDescriptions ? "0" : "58px"});
+    }
 `
 const StyledInfoIcon = styled.div`
     height: 30px;
@@ -28,12 +38,13 @@ const StyledInfoIcon = styled.div`
     transition: all 200ms linear;
 `
 
-const Header = ({ setShowInstructions, showInstructions, english }) => {
+const Header = ({ setShowDescriptions, showDescriptions, setShowInstructions, showInstructions }) => {
     
     return (
-        <StyledHeader>
-            <img src="logo.svg"/>
+        <StyledHeader showDescriptions={showDescriptions} >
+            <img src="logo.svg" />
             <StyledInfoIcon showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
+            <img src="back-arrow.png" className='back' onClick={() => setShowDescriptions(false)} />
         </StyledHeader>
     )
 }

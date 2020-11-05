@@ -160,7 +160,8 @@ const App = () => {
     
     return (
         <StyledContainer>
-            <Header english={english}
+            <Header setShowDescriptions={setShowDescriptions}
+                showDescriptions={showDescriptions}
                 showInstructions={showInstructions} 
                 setShowInstructions={setShowInstructions} />
          
