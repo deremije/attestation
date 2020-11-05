@@ -61,7 +61,7 @@ const ExecuteButtons = ({ reasons, setShowDescriptions, english, attemptPDF, set
                 </button>
             )}
             <StyledInfoLink onClick={() => setShowDescriptions(true)}>
-                Which reason should I choose?
+                {english ? "Which reason should I choose?" : "Quelle raison devrais-je choisir ?"}
             </StyledInfoLink>
         </StyledReasonButtons>
     )

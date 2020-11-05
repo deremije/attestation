@@ -176,7 +176,7 @@ const FAQ = ({english, setEnglish}) => {
     return (
         <StyledFAQ>
             {english ? 
-                <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(false)}>French</span></StyledLangLink> :
+                <StyledLangLink>Voir Sortir.io en <span onClick={() => setEnglish(false)}>français</span></StyledLangLink> :
                 <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(true)}>English</span></StyledLangLink> }
             {faq.map(entry => 
                 <StyledQA key={JSON.stringify(entry)}> 

@@ -47,25 +47,33 @@ const Instructions = ({ showInstructions, setShowInstructions, english, setEngli
     return (
         <StyledInstructions showInstructions={showInstructions}>
             <h4>
-                Generate your <br />
-                <strong>Attestation de deplacement derogatoire</strong>
+               {english ? "Generate your" : "Générez votre"}<br />
+                <strong>Attestation de déplacement dérogatoire</strong>
             </h4>
             <h1>
-                SUPER FAST
+                {english ? "SUPER FAST" : "SUPER RAPIDE"}
             </h1>
+            {english ? 
             <p>
-                Enter your info just <strong>once</strong>. Then, create an Attestation in <strong>one tap</strong>
-            </p>
+                Enter your info just <strong>once</strong>. Then, create an Attestation in <strong>one tap</strong>.
+            </p> : 
+            <p>
+                Entrez vos informations <strong>une seule fois</strong>. Ensuite, créez une attestation en <strong>un seul clic</strong>.
+            </p>}
             <h1>
-                TOTAL PRIVACY
+                {english ? "TOTAL PRIVACY" : "CONFIDENTIALITÉ TOTALE"}
             </h1>
+            {english ? 
             <p>
-                Your info is <strong>only</strong> stored on <strong>your device</strong> and never sent to <strong>anyone</strong>
-            </p>
+                Your info is <strong>only</strong> stored on <strong>your device</strong> and never sent to <strong>anyone</strong>.
+            </p> :
+            <p>
+                Vos informations sont <strong>uniquement</strong> stockées sur <strong>votre appareil</strong> et ne sont jamais envoyées à <strong>personne</strong>.
+            </p>}
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
                 {english ? 
                     "Let's Go" : 
-                    "On Y Va"
+                    "Allons-y"
                 }
             </StyledButton>
             <FAQ english={english} setEnglish={setEnglish} />

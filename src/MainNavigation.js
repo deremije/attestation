@@ -60,7 +60,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "🏢",
             description: {
                 french: "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
-                english: ""
+                english: "Travel between the home and the place of exercise of the professional activity or an educational or training establishment, professional travel that cannot be postponed, travel for a competition or an exam."
             }
         },
         {
@@ -70,7 +70,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "🏃‍♀️",
             description: {
                 french: "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie",
-                english: ""
+                english: "Short trips, within the limit of one hour daily and within a maximum radius of one kilometer around the home, related either to the individual physical activity of the persons, excluding any collective sports practice and any proximity with other persons, or to the walk with only the persons grouped together in the same home, or to the needs of pets."
             }
         },
         {
@@ -80,7 +80,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "🛒",
             description: {
                 french: "Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle, des achats de première nécessité dans des établissements dont les activités demeurent autorisées, le retrait de commande et les livraisons à domicile.",
-                english: ""
+                english: "Travel to make purchases of supplies necessary for the professional activity, purchases of basic necessities in establishments whose activities remain authorized, withdrawal of orders and home deliveries."
             }
         },
         {
@@ -90,7 +90,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "♿",
             description: {
                 french: "Déplacement des personnes en situation de handicap et leur accompagnant",
-                english: ""
+                english: "Movement of people with disabilities and their companions"
             }
         },
         {
@@ -100,7 +100,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "😇",
             description: {
                 french: "Participation à des missions d'intérêt général sur demande de l'autorité administrative",
-                english: ""
+                english: "Participation in missions of general interest at the request of the administrative authority"
             }
         },
         {
@@ -110,7 +110,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "🏫",
             description: {
                 french: "Déplacement pour chercher les enfants à l’école et à l’occasion de leurs activités périscolaires",
-                english: ""
+                english: "Travel to pick up children at school and during their extracurricular activities"
             }
         },
         {
@@ -120,7 +120,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "⚖️",
             description: {
                 french: "Convocation judiciaire ou administrative et pour se rendre dans un service public",
-                english: ""
+                english: "Judicial or administrative summons and to attend public services"
             }
         },
         {
@@ -130,7 +130,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "👨‍👩‍👧‍👧",
             description: {
                 french: "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants",
-                english: ""
+                english: "Travel for compelling family reasons, for assistance to vulnerable and precarious persons or for child care"
             }
         },
         {
@@ -140,7 +140,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             emoji: "🩺",
             description: {
                 french: "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments",
-                english: ""
+                english: "Consultations, examinations and care that cannot be provided remotely and the purchase of medication"
             }
         },
     ]    
@@ -148,7 +148,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
     return (
         <StyledMain>
             <StyledInfoButton showReasons={showReasons} showData={showData} allFieldsValidated={allFieldsValidated()} onClick={() => allFieldsValidated() && !showReasons ? expandReasons() : expandData()}>
-                <span>{showReasons ? "Your Info" : "Enter your info"}</span>
+                <span>{showReasons ? english ? "Your Info" : "Vos informations" : english ? "Enter your info" : "Entrez vos informations"}</span>
             </StyledInfoButton>
             
             <MyData updateLanguage={updateLanguage}
@@ -172,7 +172,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
                 showData={showData} />
 
             <StyledReasonButton showData={showData} showReasons={showReasons} allFieldsValidated={allFieldsValidated()} onClick={() => expandReasons()}>
-                <span>Choose your reason to go out</span>
+                <span>{english ? "Choose your reason to go out" : "Choisissez votre raison de sortir"}</span>
             </StyledReasonButton>
             {showReasons ? 
                 <ExecuteButtons
@@ -182,7 +182,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
                     setShowInfo={setShowInfo}
                     showReasons={showReasons}
                     setShowDescriptions={setShowDescriptions} /> : ""}
-            <StyledFooter showData={showData} showReasons={showReasons}>... to generate Attestation</StyledFooter> 
+            <StyledFooter showData={showData} showReasons={showReasons}>... {english ? "to generate Attestation" : "pour générer une Attestation"}</StyledFooter> 
             <Descriptions showDescriptions={showDescriptions} english={english} setShowDescriptions={setShowDescriptions} attemptPDF={attemptPDF} reasons={reasons} />
         </StyledMain>
     )
