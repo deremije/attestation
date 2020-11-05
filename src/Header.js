@@ -13,28 +13,28 @@ const StyledHeader = styled.header`
         top: -1px;
     }
     .back {
+        height: 32px;
+        width: 32px;
         position: absolute;
-        height: 24px;
-        padding: 10px;
-        top: 10px;
-        right: 8px;
-        width: auto;
+        top: 15px;
+        left: 15px;
+        transform: translateX(${props => props.showDescriptions ? "0" : "-72px" });
         transition: all 200ms linear;
-        transform: translateX(${props => props.showDescriptions ? "0" : "58px"});
     }
 `
 const StyledInfoIcon = styled.div`
-    height: 30px;
-    width: 30px;
+    height: 27px;
+    width: 27px;
     position: absolute;
-    top: 13px;
+    top: 15px;
     left: 15px;
     border-radius: 50%;
-    border: solid 2px #303030;
+    border: solid 2.5px #303030;
     font-size: 20px;
+    font-weight: bold;
     text-align: center;
     line-height: 30px;
-    transform: translateX(${props => props.showInstructions ? "-72px" : "0"});
+    transform: translateX(${props => props.showInstructions || props.showDescriptions ? "-72px" : "0"});
     transition: all 200ms linear;
 `
 
@@ -42,8 +42,8 @@ const Header = ({ setShowDescriptions, showDescriptions, setShowInstructions, sh
     
     return (
         <StyledHeader showDescriptions={showDescriptions} >
-            <img src="logo.svg" />
-            <StyledInfoIcon showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
+            <img src="logo.svg" onClick={() => {setShowDescriptions(false); setShowInstructions(false);}}/>
+            <StyledInfoIcon showDescriptions={showDescriptions} showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
             <img src="back-arrow.png" className='back' onClick={() => setShowDescriptions(false)} />
         </StyledHeader>
     )

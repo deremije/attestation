@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
     color: #303030;
     min-height: 568px;
     max-width: 450px;
-    height: 100vh;
+    height: ${() => navigator.userAgent.indexOf("Firefox") !== -1 ? "calc(100vh + 40px)" : "100vh"};
     min-height: 100%;
     width: 100vw;
     box-sizing: border-box;
