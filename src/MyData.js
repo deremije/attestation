@@ -5,7 +5,7 @@ const StyledDataForm = styled(StyledSection)`
     transition: all 200ms;
     height: ${props => props.showData ? "calc(100% - 120px)" : "0"};
     form {
-        padding: 40px 0;
+        padding: 20px 0;
     }
 `
 
@@ -38,7 +38,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
                     {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
                 </label>
                 <label>
-                    {english ? "Postal Code (5 digits)" : "Code postal12"} <input type="text" value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
+                    {english ? "Postal Code" : "Code postal"} <input type="text" value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
                 </label>               
             </form>
             <p className="indent">

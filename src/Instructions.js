@@ -21,7 +21,7 @@ const StyledInstructions = styled.div`
         color: #205ddb;
         text-align: center;
         margin: 30px 0 6px 0;
-        padding: 0;
+        padding: 0 20px;
     }
     p, h4 {
         font-size: 16px;
