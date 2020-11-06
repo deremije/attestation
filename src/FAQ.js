@@ -67,7 +67,7 @@ const FAQ = ({english, setEnglish}) => {
                 a() {return <span>Nobody can see your information except you, because it is only stored in your phone's web browser. No data is collected by Sortir.io.</span>}
             },
             fr: {
-                q: `Est-ce securisé? Qui peut voir mes informations?`,
+                q: `Est-ce securisé ? Qui peut voir mes informations ?`,
                 a() {return <span>Personne ne peut voir vos informations sauf vous. Les données ne sont stockées que dans le navigateur Web de votre téléphone et ne sont jamais transmises à un serveur.</span>}
             }
         },
@@ -78,7 +78,7 @@ const FAQ = ({english, setEnglish}) => {
                 a() {return <span>Yes, it's completely free and it always will be. However, if you really want to say thanks you can <a href="https://buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee.</a></span>}
             },
             fr: {
-                q: `Est-ce que Sortir.io est gratuit?`,
+                q: `Est-ce que Sortir.io est gratuit ?`,
                 a() {return <span>Oui, c'est totalement gratuit et ça le sera toujours. Cependant, si vous voulez vraiment me remercier, <a href="https://buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">vous pouvez m'offrir un café.</a></span>}
             }
         },
