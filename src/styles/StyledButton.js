@@ -2,10 +2,10 @@ import styled from 'styled-components'
 
 const StyledButton = styled.button`
     width: calc(100% - 80px);
-    height: 60px;
+    height: 50px;
     padding: 0px;
-    line-height: 60px;
-    font-size: 28px;
+    line-height: 50px;
+    font-size: 24px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 1px;

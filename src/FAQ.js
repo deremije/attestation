@@ -57,7 +57,7 @@ const FAQ = ({english, setEnglish}) => {
             },
             fr: {
                 q: "Qu'est-ce que c'est, Sortir.io ?",
-                a() {return <span>Sortir.io est un générateur d'attestations rapide pour vous aider lorsque vous devez sortir pendant un lockdown en France. Vous n'avez à saisir vos données d'identité qu'une seule fois. Ensuite, à chaque retour, il vous suffit d'appuyer sur le motif vous sortez et une attestation sera générée immédiatement. </span>}
+                a() {return <span>Sortir.io est un générateur d'attestations rapide pour vous aider lorsque vous devez sortir pendant un confinement en France. Vous n'avez à saisir vos données d'identité qu'une seule fois. Ensuite, à chaque retour, il vous suffit d'appuyer sur l'icône que vous voulez et une attestation sera générée immédiatement. </span>}
             }
         },
         {
@@ -91,7 +91,7 @@ const FAQ = ({english, setEnglish}) => {
             },
             fr: {
                 q: `Comment cela fonctionne-t-il ?`,
-                a() {return <span>Sortir.io enregistre vos données d'identité dans la mémoire locale de votre navigateur, ce qui signifie que tant que vous n'avez pas vidé votre cache, il peut conserver le formulaire rempli pour vous.</span>}
+                a() {return <span>Sortir.io enregistre vos données d'identité dans la mémoire locale de votre navigateur, ce qui signifie que tant que vous n'avez pas vidé votre cache, il peut conserver le formulaire que vous avez rempli.</span>}
             }
         },
         {
@@ -104,8 +104,8 @@ const FAQ = ({english, setEnglish}) => {
                     downloaded something else since creating the attestation).</span>}
             },
             fr: {
-                q: `Comment puis-je trouver mon attestation ?`,
-                a() {return <span>Lorsque vous choisissez une raison, votre attestation sera téléchargée sur votre appareil. Chaque appareil le montre différemment. Vérifiez d'abord vos notifications, mais il se peut qu'elles n'y apparaissent pas. Sur les téléphones Android, ouvrez "Fichiers" et ce sera généralement le premier fichier listé (à moins que vous n'ayez téléchargé autre chose depuis la création de l'attestation).</span>}
+                q: `Où puis-je trouver mon attestation ?`,
+                a() {return <span>Lorsque vous choisissez une raison, votre attestation sera téléchargée sur votre appareil. Chaque appareil fonctionne différemment. Vérifiez d'abord vos notifications, mais il se peut qu'elles n'y apparaissent pas. Sur les téléphones Android, ouvrez "Fichiers" et ce sera généralement le premier fichier listé (à moins que vous n'ayez téléchargé autre chose depuis la création de l'attestation).</span>}
             }
         },
         {
@@ -148,7 +148,7 @@ const FAQ = ({english, setEnglish}) => {
                 a() {return <span>We actually use that as part of this site! <a href="https://media.interieur.gouv.fr/deplacement-covid-19/">Here is their site</a>.</span>}
             },
             fr: {
-                q: `Comment puis-je trouver le générateur d'attestations officielles du gouvernement français ?`,
+                q: `Comment puis-je trouver le générateur d'attestations officiel du gouvernement français ?`,
                 a() {return <span>Nous l'utilisons en fait dans le cadre de ce site ! <a href="https://media.interieur.gouv.fr/deplacement-covid-19/">Voici leur site</a>.</span>}
             }
         },

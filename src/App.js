@@ -167,7 +167,9 @@ const App = () => {
     
     return (
         <StyledContainer>
-            <Header setShowDescriptions={setShowDescriptions}
+            <Header english={english} 
+                updateLanguage={updateLanguage}
+                setShowDescriptions={setShowDescriptions}
                 showDescriptions={showDescriptions}
                 showInstructions={showInstructions} 
                 setShowInstructions={setShowInstructions} />

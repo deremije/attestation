@@ -68,7 +68,7 @@ const Instructions = ({ showInstructions, setShowInstructions, english, setEngli
                 Your info is <strong>only</strong> stored on <strong>your device</strong> and never seen, sent, or sold to <strong>anyone</strong>.
             </p> :
             <p>
-                Vos informations sont <strong>uniquement</strong> stockées sur <strong>votre appareil</strong> et ne sont jamais vus, envoyés ou vendus à <strong>personne</strong>.
+                Vos informations sont <strong>uniquement</strong> stockées sur <strong>votre appareil</strong> et ne sont jamais vues, envoyées ou vendues à <strong>personne</strong>.
             </p>}
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
                 {english ? 

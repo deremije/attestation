@@ -40,7 +40,7 @@ const StyledInfoLink = styled.div`
     line-height: 60px;
     text-align: center;
     font-size: 16px;
-    color: blue;
+    color: #3c70e0;
     text-decoration: underline;
     grid-column: 1 / span 3;
     background-color: #eee;

@@ -4,31 +4,10 @@ import styled from 'styled-components'
 const StyledDataForm = styled(StyledSection)`
     transition: all 200ms;
     height: ${props => props.showData ? "calc(100% - 120px)" : "0"};
-`
-const StyledLangSelector = styled.div`
-    width: 100%;
-    padding: 20px 0;
-    line-height: 32px;
-    height: 32px;
-    text-align: center;
-    position: relative;
-    vertical-align: middle;
-    display: flex;
-    justify-content: center;
-`
-const StyledLangButton = styled.div`
-    font-weight: ${props => props.currentLanguage ? "bold" : "normal"};
-    padding: 0 5px;
-    img {
-        margin: ${props => props.currentLanguage ? "1px 3px" : "3px 5px"};
-        border: ${props => props.currentLanguage ? "solid 2px #1a1a1a" : "none"};
-        padding: 1px;
-        border-radius: 50%;
-        position: relative;
-        vertical-align: middle;
+    form {
+        padding: 40px 0;
     }
 `
-
 
 const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const birthdayValid = () => {
@@ -39,10 +18,6 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
     }
     return (
         <StyledDataForm showData={showData}>
-            <StyledLangSelector>
-                <StyledLangButton currentLanguage={!english} onClick={() => english && updateLanguage()}>Français <img src="/france-flag-round-icon-32.png" /></StyledLangButton>
-                <StyledLangButton currentLanguage={english} onClick={() => !english && updateLanguage()}>English <img src="/united-kingdom-flag-round-icon-32.png" /></StyledLangButton>
-            </StyledLangSelector>
             <form autoComplete="off">
                 <label>
                     {english ? "First Name" : "Prénom"} <input type="text" value={firstname} placeholder="Emmanuel" onChange={e => setFirstname(e.target.value)} />
@@ -51,7 +26,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
                     {english ? "Last Name" : "Nom"} <input type="text" value={lastname} placeholder="Macron" onChange={e => setLastname(e.target.value)} />
                 </label>
                 <label>
-                    {english ? "Birthdate (form" : "Date de naissance (forme"} 21/12/1977) <input type="text" value={birthday} className={birthdayValid()} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
+                    {english ? "Birthdate" : "Date de naissance"} (format 21/12/1977) <input type="text" value={birthday} className={birthdayValid()} placeholder="21/12/1977" onChange={e => updateBirthday(e)} />
                 </label>
                 <label>
                     {english ? "Birthplace" : "Lieu de naissance"} <input type="text" value={placeofbirth} placeholder="Amiens" onChange={e => setPlaceofbirth(e.target.value)} />
