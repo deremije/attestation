@@ -137,7 +137,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             reason: "sante",
             french: "Sante",
             english: "Health",
-            emoji: "🩺",
+            emoji: "⚕️",
             description: {
                 french: "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments",
                 english: "Consultations, examinations and care that cannot be provided remotely and the purchase of medication"
