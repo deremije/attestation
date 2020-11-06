@@ -161,7 +161,6 @@ const App = () => {
     }
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
-
         downloadBlob(pdfBlob, `attestation-sortir-io-${new Date().toLocaleDateString('fr-FR') + "-" + new Date().toLocaleTimeString('fr-FR')}.pdf`)
     }
     
