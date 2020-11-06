@@ -100,7 +100,7 @@ const App = () => {
         setEnglish(!english)
     }
     const allFieldsValidated = () => {
-        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.toString().length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
+        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     }
     const updateData = () => {
         if (allFieldsValidated()) {

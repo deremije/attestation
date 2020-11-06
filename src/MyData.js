@@ -35,7 +35,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
         return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
     }
     const postalCodeValid = () => {
-        return zipcode.length === 0 || zipcode.length === 5 ? "" : "error"
+        return zipcode.length >= 5 ? "" : "error"
     }
     return (
         <StyledDataForm showData={showData}>
@@ -63,7 +63,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
                     {english ? "City" : "Ville"} <input type="text" value={city} placeholder="Paris" onChange={e => setCity(e.target.value)} />
                 </label>
                 <label>
-                    {english ? "Postal Code (5 digits)" : "Code postal (5 chiffres)"} <input type="number" step='0' value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
+                    {english ? "Postal Code (5 digits)" : "Code postal12"} <input type="text" value={zipcode} className={postalCodeValid()} placeholder="75008" onChange={e => setZipcode(e.target.value)} />
                 </label>               
             </form>
             <p className="indent">
