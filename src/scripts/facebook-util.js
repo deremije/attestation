@@ -9,7 +9,7 @@ export function warnFacebookBrowserUserIfNecessary () {
   }
 }
 // see: https://stackoverflow.com/a/32348687/1513045
-function isFacebookBrowser () {
+export function isFacebookBrowser () {
   const ua = navigator.userAgent || navigator.vendor || window.opera
   return ua.includes('FBAN') || ua.includes('FBAV')
 }

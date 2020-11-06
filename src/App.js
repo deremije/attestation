@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react'; 
 import { generatePdf } from "./scripts/pdf-util"
 import { downloadBlob } from "./scripts/dom-utils"
+import { isFacebookBrowser } from "./scripts/facebook-util.js"
 import pdfBase from './certificate.pdf'
 import styled from 'styled-components'
 import MainNavigation from "./MainNavigation"
@@ -76,7 +77,7 @@ const App = () => {
     const [showMain, setShowMain] = useState(false)
     const [showDescriptions, setShowDescriptions] = useState(false)
     
-    useEffect(async () => {
+    useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
         
         if (window.localStorage.getItem('personal-info')) {
@@ -204,7 +205,10 @@ const App = () => {
             <Instructions setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} setEnglish={setEnglish} />
 
             <StyledConfirmation downloading={downloading}>
-                {english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."}
+                {isFacebookBrowser() ? 
+                    english ? "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." : "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." :
+                    english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."
+                }
             </StyledConfirmation>
 
         </StyledContainer>
