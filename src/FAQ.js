@@ -1,27 +1,53 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 
-const StyledQuestion = styled.h5`
+const StyledFAQ = styled.section`
+    padding-top: 8px;
+    padding-bottom: 40px;
     background-color: #fff;
-    text-align: left;
-    width: calc(100% - 60px);
-    margin: 25px auto 10px;
-    padding: 10px;
-    color: #3c70e0;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 18px;
+    margin-top: 20px;
 `
-const StyledAnswer = styled.div`
-    width: calc(100% - 60px);
-    padding: 0px 20px 0 40px;
+const StyledLangLink = styled.div`
+    width: calc(100% - 20px);
+    margin: 10px auto 30px;
+    background-color: #C2F39C;
+    color: #2A5508;
+    text-align: center;
     font-size: 16px;
-    line-height: 24px;
-    text-align: left;
+    line-height: 20px;
+    padding: 20px 0;
+    span {
+        cursor: pointer;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+`
+const StyledQA = styled.div`
+    border-bottom: solid 1px #EDEDED;
+    width: calc(100% - 60px);
+    margin: auto;
+    padding: 10px 0;
+    h5 {
+        text-align: left;
+        width: 100%;
+        margin: 10px auto;
+        /* padding: 10px; */
+        color: #3c70e0;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    div {
+        width: calc(100% - 20px);
+        padding: 0px 20px 10px 0px;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: left;
+    }
 `
 
 
-const FAQ = ({english}) => {
+const FAQ = ({english, setEnglish}) => {
     const frequentlyAskedQuestions = [
         {
             visible: false,
@@ -30,18 +56,18 @@ const FAQ = ({english}) => {
                 a() {return <span>Sortir.io is a quick attestation generator to help you when you need to go out during lockdown in France. You only need to enter your identity details once. Then each time you return, just tap on the reason you're going out and an attestation will be generated immediately.</span>},
             },
             fr: {
-                q: "Qu'est-ce que Sortir.io ?",
-                a() {return <span>Sortir.io est un générateur d'attestations rapide pour vous aider lorsque vous devez sortir pendant un lockdown en France. Vous n'avez à saisir vos données d'identité qu'une seule fois. Ensuite, à chaque retour, il vous suffit d'appuyer sur le motif vous sortez et une attestation sera générée immédiatement. </span>}
+                q: "Qu'est-ce que c'est, Sortir.io ?",
+                a() {return <span>Sortir.io est un générateur d'attestations rapide pour vous aider lorsque vous devez sortir pendant un confinement en France. Vous n'avez à saisir vos données d'identité qu'une seule fois. Ensuite, à chaque retour, il vous suffit d'appuyer sur l'icône que vous voulez et une attestation sera générée immédiatement. </span>}
             }
         },
         {
             visible: false,
             en: {
-                q: `Is this safe? Who can see my information?`,
-                a() {return <span>Nobody can see your information except you. Data is only stored in your phone's web browser, and never transmitted to a server.</span>}
+                q: `Is this secure? Who can see my information?`,
+                a() {return <span>Nobody can see your information except you, because it is only stored in your phone's web browser. No data is collected by Sortir.io.</span>}
             },
             fr: {
-                q: `Est-ce sûr? Qui peut voir mes informations?`,
+                q: `Est-ce securisé ? Qui peut voir mes informations ?`,
                 a() {return <span>Personne ne peut voir vos informations sauf vous. Les données ne sont stockées que dans le navigateur Web de votre téléphone et ne sont jamais transmises à un serveur.</span>}
             }
         },
@@ -52,7 +78,7 @@ const FAQ = ({english}) => {
                 a() {return <span>Yes, it's completely free and it always will be. However, if you really want to say thanks you can <a href="https://buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">buy me a coffee.</a></span>}
             },
             fr: {
-                q: `Est-ce que Sortir.io est gratuit?`,
+                q: `Est-ce que Sortir.io est gratuit ?`,
                 a() {return <span>Oui, c'est totalement gratuit et ça le sera toujours. Cependant, si vous voulez vraiment me remercier, <a href="https://buymeacoffee.com/jeremyrandall" target="_blank" rel="noreferrer">vous pouvez m'offrir un café.</a></span>}
             }
         },
@@ -65,7 +91,7 @@ const FAQ = ({english}) => {
             },
             fr: {
                 q: `Comment cela fonctionne-t-il ?`,
-                a() {return <span>Sortir.io enregistre vos données d'identité dans la mémoire locale de votre navigateur, ce qui signifie que tant que vous n'avez pas vidé votre cache, il peut conserver le formulaire rempli pour vous.</span>}
+                a() {return <span>Sortir.io enregistre vos données d'identité dans la mémoire locale de votre navigateur, ce qui signifie que tant que vous n'avez pas vidé votre cache, il peut conserver le formulaire que vous avez rempli.</span>}
             }
         },
         {
@@ -78,8 +104,8 @@ const FAQ = ({english}) => {
                     downloaded something else since creating the attestation).</span>}
             },
             fr: {
-                q: `Comment puis-je trouver mon attestation ?`,
-                a() {return <span>Lorsque vous choisissez une raison, votre attestation sera téléchargée sur votre appareil. Chaque appareil le montre différemment. Vérifiez d'abord vos notifications, mais il se peut qu'elles n'y apparaissent pas. Sur les téléphones Android, ouvrez "Fichiers" et ce sera généralement le premier fichier listé (à moins que vous n'ayez téléchargé autre chose depuis la création de l'attestation).</span>}
+                q: `Où puis-je trouver mon attestation ?`,
+                a() {return <span>Lorsque vous choisissez une raison, votre attestation sera téléchargée sur votre appareil. Chaque appareil fonctionne différemment. Vérifiez d'abord vos notifications, mais il se peut qu'elles n'y apparaissent pas. Sur les téléphones Android, ouvrez "Fichiers" et ce sera généralement le premier fichier listé (à moins que vous n'ayez téléchargé autre chose depuis la création de l'attestation).</span>}
             }
         },
         {
@@ -108,11 +134,11 @@ const FAQ = ({english}) => {
             visible: false,
             en: {
                 q: `Who made Sortir.io?`,
-                a() {return <span>Sortir.io was created and is maintained by <a href="https://jeremyrandall.dev">Jeremy Randall</a>, a web developer in Lyon.</span>}
+                a() {return <span>Sortir.io was created and is maintained by <a href="https://jeremyrandall.dev">Jeremy Randall</a>, a web developer in Lyon. UX and UI design by <a href="https://shannou.com">Shannon Randall</a>.</span>}
             },
             fr: {
                 q: `Qui a créé Sortir.io ?`,
-                a() {return <span>Sortir.io a été créé et est maintenu par <a href="https://jeremyrandall.dev">Jeremy Randall</a>, un développeur web à Lyon.</span>}
+                a() {return <span>Sortir.io a été créé et est maintenu par <a href="https://jeremyrandall.dev">Jeremy Randall</a>, un développeur web à Lyon. UX et UI design par <a href="https://shannou.com">Shannon Randall</a>.</span>}
             }
         },
         {
@@ -122,7 +148,7 @@ const FAQ = ({english}) => {
                 a() {return <span>We actually use that as part of this site! <a href="https://media.interieur.gouv.fr/deplacement-covid-19/">Here is their site</a>.</span>}
             },
             fr: {
-                q: `Comment puis-je trouver le générateur d'attestations officielles du gouvernement français ?`,
+                q: `Comment puis-je trouver le générateur d'attestations officiel du gouvernement français ?`,
                 a() {return <span>Nous l'utilisons en fait dans le cadre de ce site ! <a href="https://media.interieur.gouv.fr/deplacement-covid-19/">Voici leur site</a>.</span>}
             }
         },
@@ -148,18 +174,22 @@ const FAQ = ({english}) => {
         setFaq(newFaq)
     }
     return (
-        <div style={{"paddingBottom": "60px"}}>
-            {faq.map(entry => <div> 
-                <StyledQuestion onClick={() => toggleFaq(JSON.stringify(entry))}>
-                    {entry[lang].q}
-                </StyledQuestion> 
+        <StyledFAQ>
+            {english ? 
+                <StyledLangLink>Voir Sortir.io en <span onClick={() => setEnglish(false)}>français</span></StyledLangLink> :
+                <StyledLangLink>Show Sortir.io in <span onClick={() => setEnglish(true)}>English</span></StyledLangLink> }
+            {faq.map(entry => 
+                <StyledQA key={JSON.stringify(entry)}> 
+                    <h5 onClick={() => toggleFaq(JSON.stringify(entry))}>
+                        {entry[lang].q}
+                    </h5> 
                 { entry.visible ? 
-                    <StyledAnswer>
+                    <div>
                         {entry[lang].a()}
-                    </StyledAnswer> : ""}
-                </div>
+                    </div> : ""}
+                </StyledQA>
             )}
-        </div>
+        </StyledFAQ>
     )
 }
 

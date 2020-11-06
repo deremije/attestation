@@ -2,41 +2,36 @@ import './App.css';
 import { useEffect, useState } from 'react'; 
 import { generatePdf } from "./scripts/pdf-util"
 import { downloadBlob } from "./scripts/dom-utils"
+import { isFacebookBrowser } from "./scripts/facebook-util.js"
 import pdfBase from './certificate.pdf'
 import styled from 'styled-components'
-import Info from './Info'
-import MyData from './MyData'
-import ExecuteButtons from './ExecuteButtons'
+import MainNavigation from "./MainNavigation"
 import Instructions from './Instructions'
-import StyledHeaderBar from './styles/StyledHeaderBar'
+import Header from './Header'
 const StyledContainer = styled.div`
-        text-align: center;
-        font-family: 'Merriweather', serif;
-        min-height: 568px;
-        max-width: 450px;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        position: relative;
-        background-color: #EEE;
-    `
-const StyledLangSelector = styled.div`
-    width: 88px;
-    margin-right: -6px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #303030;
+    min-height: 568px;
+    max-width: 450px;
+    height: ${() => navigator.userAgent.indexOf("Firefox") !== -1 ? "calc(100vh + 40px)" : "100vh"};
+    min-height: 100%;
+    width: 100vw;
+    box-sizing: border-box;
     position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    h1 {
+        font-size: 24px;
+    }
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        color: #3c70e0;
+    }
 `
-const StyledLangButton = styled.img`
-    margin: ${props => props.currentLanguage ? "1px 3px" : "3px 5px"};
-    border: ${props => props.currentLanguage ? "solid 2px #1a1a1a" : "none"};
-    padding: 1px;
-    border-radius: 50%;
-`
-const StyledFooterBar = styled(StyledHeaderBar)`
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    padding-bottom: 20px;
-`
+
 const StyledConfirmation = styled.div`
     position: absolute;
     top: 50%;
@@ -51,6 +46,7 @@ const StyledConfirmation = styled.div`
     background-color: navy;
     box-shadow: 5px 5px #1a1a1a88;
     border-radius: 8px;
+    display: ${props => props.downloading ? "block" : "none"};
     animation: fade 5s ease;
     @keyframes fade {
         0% {
@@ -61,19 +57,6 @@ const StyledConfirmation = styled.div`
         }
         100% {
             opacity: 0;
-        }
-    }
-`
-const StyledHowToLink = styled.p`
-    color: #3c70e0;
-    cursor: pointer;
-    span {
-        text-align: center;
-        width: 100%;
-        display: inline-block;
-        img {
-            position: relative;
-            vertical-align: middle;
         }
     }
 `
@@ -88,11 +71,12 @@ const App = () => {
     const [zipcode, setZipcode] = useState("")
     const [english, setEnglish] = useState(false)
     const [showData, setShowData] = useState(false)
-    const [showInfo, setShowInfo] = useState("")
     const [downloading, setDownloading] = useState(false)
+    const [showReasons, setShowReasons] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
-    const [openPDF, setOpenPDF] = useState(true)
-
+    const [showMain, setShowMain] = useState(false)
+    const [showDescriptions, setShowDescriptions] = useState(false)
+    
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
         
@@ -105,8 +89,9 @@ const App = () => {
             setLastname(personalInfo.lastname) 
             setPlaceofbirth(personalInfo.placeofbirth) 
             setZipcode(personalInfo.zipcode)
+            setShowReasons(true)
+            setShowMain(true)
         } else {
-            setShowData(true)
             setShowInstructions(true)
         }
     }, [])
@@ -115,7 +100,7 @@ const App = () => {
         setEnglish(!english)
     }
     const allFieldsValidated = () => {
-        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.toString().length === 5 && zipcode.match(/\d{5}/) && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
+        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     }
     const updateData = () => {
         if (allFieldsValidated()) {
@@ -133,6 +118,13 @@ const App = () => {
             setShowData(false)
         }
     }
+    const expandReasons = () => {
+        if (allFieldsValidated()) {
+            updateData()
+            setShowReasons(true)
+        }
+    }
+    useEffect(() => expandReasons(), [])
     const updateBirthday = (e) => {
         if ((e.target.value.length === 2 && e.target.value.match(/\d{2}/)) || (e.target.value.length === 5 && e.target.value.match(/\d{2}\/\d{2}/))) {
             setBirthday(`${e.target.value}/`)
@@ -165,141 +157,61 @@ const App = () => {
             createPDF(profile, reason, pdfBase)
             setDownloading(true)
             setTimeout(() => setDownloading(false), 5000)
-        } else {
-            console.log("missing a value")
-        }
+        } 
     }
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
-        const timestamp = new Date().toLocaleDateString('fr-FR').substring(0,10) + "-" + new Date().toLocaleTimeString('fr-FR')
-        downloadBlob(pdfBlob, `attestation-sortir-io-${timestamp}.pdf`)
+        downloadBlob(pdfBlob, `attestation-sortir-io-${new Date().toLocaleDateString('fr-FR') + "-" + new Date().toLocaleTimeString('fr-FR')}.pdf`)
     }
-    const info = {
-        "Travail": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
-        "Sport": "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie",
-        "Animaux": "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie",
-        "Achat": "Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle, des achats de première nécessité [3] dans des établissements dont les activités demeurent autorisées, le retrait de commande et les livraisons à domicile.",
-        "Handicap": "Déplacement des personnes en situation de handicap et leur accompagnant",
-        "Missions": "Participation à des missions d'intérêt général sur demande de l'autorité administrative",
-        "L'ecole": "Déplacement pour chercher les enfants à l’école et à l’occasion de leurs activités périscolaires",
-        "Convocation": "Convocation judiciaire ou administrative et pour se rendre dans un service public",
-        "Famille": "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants",
-        "Sante": "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments"
-    }
-    const buttons = [
-        {
-            reason: "travail",
-            french: "Travail",
-            english: "Work",
-            emoji: "🏢",
-        },
-        {
-            reason: "sport_animaux",
-            french: "Sport",
-            english: "Exercise",
-            emoji: "🏃‍♀️",
-        },
-        {
-            reason: "sport_animaux",
-            french: "Animaux",
-            english: "Pets",
-            emoji: "🐩",
-        },
-        {
-            reason: "achats",
-            french: "Achat",
-            english: "Shopping",
-            emoji: "🛒",
-        },
-        {
-            reason: "handicap",
-            french: "Handicap",
-            english: "Assist Disabled",
-            emoji: "♿",
-        },
-        {
-            reason: "missions",
-            french: "Missions",
-            english: "Missions",
-            emoji: "😇",
-        },
-        {
-            reason: "enfants",
-            french: "L'ecole",
-            english: "School",
-            emoji: "🏫",
-        },
-        {
-            reason: "convocation",
-            french: "Convocation",
-            english: "Convocation",
-            emoji: "⚖️",
-        },
-        {
-            reason: "famille",
-            french: "Famille",
-            english: "Family",
-            emoji: "👨‍👩‍👧‍👧",
-        },
-        {
-            reason: "sante",
-            french: "Sante",
-            english: "Health",
-            emoji: "🩺",
-        },
-    ]
     
     return (
         <StyledContainer>
-            <StyledHeaderBar>
-                <div onClick={() => setShowData(true)}>
-                    {showInstructions || showData || showInfo !== "" ? "" : <span>{english ? "Update Identity Details" : "Mettre à jour mes données"}</span>}
-                </div>
-                <StyledLangSelector onClick={updateLanguage}>
-                    <StyledLangButton src="/france-flag-round-icon-32.png" currentLanguage={!english} />
-                    <StyledLangButton src="/united-kingdom-flag-round-icon-32.png" currentLanguage={english} /> 
-                </StyledLangSelector>
-            </StyledHeaderBar>
+            <Header english={english} 
+                updateLanguage={updateLanguage}
+                setShowDescriptions={setShowDescriptions}
+                showDescriptions={showDescriptions}
+                showInstructions={showInstructions} 
+                setShowInstructions={setShowInstructions} />
+         
+            <MainNavigation 
+                showDescriptions={showDescriptions}
+                setShowDescriptions={setShowDescriptions}
+                expandReasons={expandReasons}
+                updateLanguage={updateLanguage} 
+                english={english} 
+                setEnglish={setEnglish}
+                showData={showData}
+                setShowData={setShowData}
+                showReasons={showReasons}
+                setShowReasons={setShowReasons} 
+                allFieldsValidated={allFieldsValidated}
+                updateData={updateData}
+                updateBirthday={updateBirthday}
+                updateBirthday={updateBirthday}
+                firstname={firstname}
+                lastname={lastname}
+                birthday={birthday}
+                placeofbirth={placeofbirth}
+                address={address}
+                city={city}
+                zipcode={zipcode}
+                setFirstname={setFirstname}
+                setLastname={setLastname}
+                setPlaceofbirth={setPlaceofbirth}
+                setAddress={setAddress}
+                setCity={setCity}
+                setZipcode={setZipcode}
+                attemptPDF={attemptPDF} />
 
-            
-            
-            { showData ? 
-                <MyData english={english}  
-                        firstname={firstname}
-                        lastname={lastname}
-                        birthday={birthday}
-                        placeofbirth={placeofbirth}
-                        address={address}
-                        city={city}
-                        zipcode={zipcode}
-                        setFirstname={setFirstname}
-                        setLastname={setLastname}
-                        updateBirthday={updateBirthday}
-                        setPlaceofbirth={setPlaceofbirth}
-                        setAddress={setAddress}
-                        setCity={setCity}
-                        setZipcode={setZipcode}
-                        updateData={updateData} /> 
-            : showInfo !== "" ? 
-                <Info english={english} showInfo={showInfo} info={info} setShowInfo={setShowInfo} /> 
-            : 
-                <ExecuteButtons buttons={buttons} english={english} attemptPDF={attemptPDF} setShowInfo={setShowInfo} />
-            }
+            <Instructions setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} setEnglish={setEnglish} />
 
-            {showInstructions ? <Instructions english={english} setShowInstructions={setShowInstructions} /> : ""}
-            
-            <StyledFooterBar>
-                {!showInstructions ? <StyledHowToLink>
-                    <span onClick={() => setShowInstructions(true)}>
-                        <img src="/favicon-16x16.png" /> {english ? "How to use Sortir.io" : "Comment utiliser Sortir.io"} <img src="/favicon-16x16.png" />
-                    </span>
-                </StyledHowToLink> : ""}
-            </StyledFooterBar>
-            {downloading ? 
-                <StyledConfirmation>
-                    {english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."}
-                </StyledConfirmation> : ""
-            }
+            <StyledConfirmation downloading={downloading}>
+                {isFacebookBrowser() ? 
+                    english ? "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." : "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." :
+                    english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."
+                }
+            </StyledConfirmation>
+
         </StyledContainer>
     );
 }

@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 const StyledSection = styled.section`
     position: relative;
-    top: 0px;
-    left: 0px;
     width: 100%;
     height: calc(100% - 112px);
     padding-bottom: 0px;
@@ -26,10 +24,12 @@ const StyledSection = styled.section`
         width: calc(100% - 60px);
         margin-top: -10px;
         text-align: center;
+        font-style: italic;
     }
     form {
         width: calc(100% - 60px);
         margin: auto;
+        padding-bottom: 30px;
         label {
             display: block;
             margin: 10px auto 5px;
@@ -48,6 +48,15 @@ const StyledSection = styled.section`
                 font-size: 18px;
                 font-family: 'Merriweather', sans-serif;
                 position: relative;
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                display: none;
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type=number] {
+                -moz-appearance: textfield;
             }
             .error {
                 background-color: lightpink;

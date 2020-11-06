@@ -1,14 +1,9 @@
-html {
-  background-color: #1a1a1a;
-}
+html,
 body {
-  margin: auto;
+  margin: 0;
   min-height: 568px;
   max-width: 450px;
   height: 100vh;
-  width: 100vw;
-  color: #1a1a1a;
-}
-h1 {
-  font-size: 24px;
+  width: 100%;
+  color: #fff;
 }

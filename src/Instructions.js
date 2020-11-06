@@ -5,69 +5,78 @@ import FAQ from './FAQ'
 
 const StyledInstructions = styled.div`
     position: absolute;
+    top: 60px;
     background-color: #eee;
     overflow-y: auto;
-    top: 40px;
-    left: 0;
     width: 100%;
-    height: calc(100% - 40px);
-    padding-bottom: 0px;
-    font-family: 'Monserrat', sans-serif;
-    h3 {
-        padding: 10px 10px 20px;
-        margin: 0;
-        font-size: 26px;
-        font-family: 'Merriweather', serif;
+    padding-top: 30px;
+    height: calc(100% - 60px);
+    transition: all 200ms linear;
+    transform: translateX(${props => props.showInstructions ? "0" : "-100%"});
+    h1 {
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 900;
+        letter-spacing: 1.25px;
+        color: #205ddb;
+        text-align: center;
+        margin: 30px 0 6px 0;
+        padding: 0 20px;
+    }
+    p, h4 {
+        font-size: 16px;
+        line-height: 22px;
+        text-align: center;
+        color: #464646;
+        margin: 0 auto;
+        padding: 0;
+        width: calc(100% - 60px);
+        min-width: 240px;
+        font-weight: normal;
+        strong {
+            font-weight: bold;
+            font-style: italic;
+        }
     }
     h4 {
-        margin: 0;
-        padding: 20px 10px 0;
-        font-size: 18px;
-    }
-    p {
-        width: calc(100% - 80px);
-        padding: 0px 40px;
-        font-size: 18px;
-        text-align: left;
-    }
-    ol {
-        font-weight: bold;
-        margin: 25px auto;
-        line-height: 20px;
-        text-align: left;
-        padding: 0px 60px;
-        font-size: 20px;
-        li {
-            margin: 10px 0;
-            line-height: 32px;
-        }
+        font-size: 14px;
     }
 `
 
-const Instructions = ({ english, setShowInstructions }) => {
+const Instructions = ({ showInstructions, setShowInstructions, english, setEnglish }) => {
     return (
-        <StyledInstructions>
+        <StyledInstructions showInstructions={showInstructions}>
             <h4>
-                {english ? "Easily generate an" : "Générez facilement votre"}
+               {english ? "Generate your" : "Générez votre"}<br />
+                <strong>Attestation de déplacement dérogatoire</strong>
             </h4>
-            <h3>
-                Attestation de Deplacement Derogatoire
-            </h3>
-            <ol>
-                <li>
-                    {english ? "Save your identity details" : "Enregistrez vos données d'identité"}
-                </li>
-                <li>
-                    {english ? "Choose your reason to be out" : "Choisissez votre raison de sortir"}
-                </li>
-            </ol>
+            <h1>
+                {english ? "SUPER FAST" : "SUPER RAPIDE"}
+            </h1>
+            {english ? 
             <p>
-                {english ? "Your attestation is saved automatically to your device. And the next time you need one, you can skip step 1!" : "Votre attestation est enregistrée automatiquement sur votre appareil. Et la prochaine fois que vous en aurez besoin, vous pourrez sauter la première étape !"}
-            </p>
+                Enter your info just <strong>once</strong>. Then, create an Attestation in <strong>one tap</strong>.
+            </p> : 
+            <p>
+                Entrez vos informations <strong>une seule fois</strong>. Ensuite, créez une attestation en <strong>un seul clic</strong>.
+            </p>}
+            <h1>
+                {english ? "TOTAL PRIVACY" : "CONFIDENTIALITÉ TOTALE"}
+            </h1>
+            {english ? 
+            <p>
+                Your info is <strong>only</strong> stored on <strong>your device</strong> and never seen, sent, or sold to <strong>anyone</strong>.
+            </p> :
+            <p>
+                Vos informations sont <strong>uniquement</strong> stockées sur <strong>votre appareil</strong> et ne sont jamais vues, envoyées ou vendues à <strong>personne</strong>.
+            </p>}
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
-                {english ? "Got It" : "D'accord"}
+                {english ? 
+                    "Let's Go" : 
+                    "Allons-y"
+                }
             </StyledButton>
-            <FAQ english={english} />
+            <FAQ english={english} setEnglish={setEnglish} />
         </StyledInstructions>
     )
 }
