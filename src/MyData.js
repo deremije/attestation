@@ -14,7 +14,7 @@ const MyData = ({ showData, updateLanguage, updateBirthday, updateData, english,
         return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
     }
     const postalCodeValid = () => {
-        return zipcode.length >= 5 ? "" : "error"
+        return zipcode.length >= 5 || zipcode.length === 0 ? "" : "error"
     }
     return (
         <StyledDataForm showData={showData}>
