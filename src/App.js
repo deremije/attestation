@@ -102,11 +102,11 @@ const App = () => {
 
         let redirectAddress = `${host}?`
         paramsArray.forEach((param) => {
-            console.log("parsing", param)
             if (reasonsList.includes(param)) redirectAddress += `action=${param}&`
             else if (param[0] === "@") redirectAddress += `at=${param.substring(1)}&`
             else if (param[0] === "-" || param[0] === "m") redirectAddress += `past=${param.substring(1)}&`
-            else if (param[0] === "&" || param[0] === "p") redirectAddress += `future=${param.substring(1)}&`
+            else if (param[0] === "p") redirectAddress += `future=${param.substring(1)}&`
+            else if (Number(param) == param) redirectAddress += `future=${param}&`
         })
         if (redirectAddress === `${host}?`) redirectAddress = host
         window.location = redirectAddress
@@ -183,9 +183,10 @@ const App = () => {
             setBirthday(e.target.value)
         }
     }
+    const attestationTime = () => urlParams && urlParams.get("past") ? new Date(Number(new Date()) - (Number(urlParams.get("past")) * 60000)) : urlParams && urlParams.get("future") ? new Date((Number(urlParams.get("future")) * 60000) + Number(new Date())) : new Date()
+            
     const attemptPDF = (reason) => {
         if (allFieldsValidated()) {
-            const attestationTime = urlParams && urlParams.get("past") ? new Date(Number(new Date()) - (Number(urlParams.get("past")) * 60000)) : urlParams && urlParams.get("future") ? new Date((Number(urlParams.get("future")) * 60000) + Number(new Date())) : new Date()
             let profile = {
                 address,
                 birthday,
@@ -194,8 +195,8 @@ const App = () => {
                 zipcode,
                 firstname,
                 lastname,
-                datesortie: attestationTime.toLocaleString('fr-FR').substring(0,10),
-                heuresortie: urlParams && urlParams.get("at") ? urlParams.get("at") : attestationTime.toLocaleString('fr-FR').substring(13,18)
+                datesortie: attestationTime().toLocaleString('fr-FR').substring(0,10),
+                heuresortie: urlParams && urlParams.get("at") ? urlParams.get("at") : attestationTime().toLocaleString('fr-FR').substring(13,18)
             }
             createPDF(profile, reason, pdfBase)
             setDownloading(true)
@@ -204,7 +205,7 @@ const App = () => {
     }
     const createPDF = async (profile, reason, pdfBase) => {
         const pdfBlob = await generatePdf(profile, reason, pdfBase)
-        downloadBlob(pdfBlob, `attestation-sortir-io-${new Date().getUTCDate()}_${new Date().getMonth() + 1}_${new Date().getUTCFullYear()}-${new Date().toLocaleTimeString('fr-FR')}.pdf`)
+        downloadBlob(pdfBlob, `attestation-sortir-io-${attestationTime().getUTCDate()}_${attestationTime().getMonth() + 1}_${attestationTime().getUTCFullYear()}-${attestationTime().toLocaleTimeString('fr-FR')}.pdf`)
     }
     
     return (
