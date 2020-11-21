@@ -46,7 +46,7 @@ const StyledFooter = styled.footer`
     transform: scaleY(${props => props.showData || props.showReasons ? "0" : "1"});
 `
 
-const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, setShowInfo, attemptPDF, updateLanguage, english, setEnglish, showData, showReasons, setShowReasons, allFieldsValidated, updateBirthday, updateData, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
+const MainNavigation = ({ staticTime, adjustment, setAdjustment, showDescriptions, setShowDescriptions, expandReasons, setShowInfo, attemptPDF, updateLanguage, english, setEnglish, showData, showReasons, setShowReasons, allFieldsValidated, updateBirthday, updateData, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const expandData = () => {
         setShowData(true)
         setShowReasons(false)
@@ -176,6 +176,9 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             </StyledReasonButton>
             {showReasons ? 
                 <ExecuteButtons
+                    staticTime={staticTime}
+                    adjustment={adjustment}
+                    setAdjustment={setAdjustment}
                     reasons={reasons} 
                     english={english} 
                     attemptPDF={attemptPDF} 

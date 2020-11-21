@@ -74,12 +74,13 @@ const App = () => {
     const [downloading, setDownloading] = useState(false)
     const [showReasons, setShowReasons] = useState(false)
     const [showInstructions, setShowInstructions] = useState(false)
-    const [showMain, setShowMain] = useState(false)
     const [showDescriptions, setShowDescriptions] = useState(false)
     const [generateDefault, setGenerateDefault] = useState(true)
     const [urlParams, setUrlParams] = useState(new URLSearchParams(window.location.search))
+    const [adjustment, setAdjustment] = useState(0)
+    const [staticTime, setStaticTime] = useState(null)
     
-    const host = "http://www.sortir.io/"
+    const host = "http://localhost:3000/"
     const reasonsList = [
         "travail",
         "achats",
@@ -99,14 +100,11 @@ const App = () => {
         "school"
     ]
     const parseParams = (paramsArray) => {
-
         let redirectAddress = `${host}?`
         paramsArray.forEach((param) => {
             if (reasonsList.includes(param)) redirectAddress += `action=${param}&`
             else if (param[0] === "@") redirectAddress += `at=${param.substring(1)}&`
-            else if (param[0] === "-" || param[0] === "m") redirectAddress += `past=${param.substring(1)}&`
-            else if (param[0] === "p") redirectAddress += `future=${param.substring(1)}&`
-            else if (Number(param) == param) redirectAddress += `future=${param}&`
+            else if (param[0] === "-" || Number(param) == param) redirectAddress += `adjust=${param}&`
         })
         if (redirectAddress === `${host}?`) redirectAddress = host
         window.location = redirectAddress
@@ -118,6 +116,8 @@ const App = () => {
         else if (window.location.pathname.length > 1) {
             parseParams(window.location.pathname.substring(1).split("/"))
         }
+        else if (urlParams.get("adjust")) setAdjustment(60000 * Number(urlParams.get("adjust")))
+        else if (urlParams.get("at")) setStaticTime(urlParams.get("at"))
     }, [])
 
     useEffect(() => {
@@ -133,17 +133,17 @@ const App = () => {
             setPlaceofbirth(personalInfo.placeofbirth) 
             setZipcode(personalInfo.zipcode)
             setShowReasons(true)
-            setShowMain(true)
         } else {
             setShowInstructions(true)
         }
     }, [])
 
-    const allFieldsValidated = () => {
-        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
-    }
+    const allFieldsValidated = () => address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
+    
     useEffect(() => {
+        console.log('useEffect', generateDefault)
         if (generateDefault && urlParams && urlParams.get("action") && allFieldsValidated()) {
+            console.log('useEffect')
             setGenerateDefault(false)
             if (window.localStorage.getItem('personal-info')) attemptPDF(urlParams.get("action"))
         }
@@ -183,9 +183,11 @@ const App = () => {
             setBirthday(e.target.value)
         }
     }
-    const attestationTime = () => urlParams && urlParams.get("past") ? new Date(Number(new Date()) - (Number(urlParams.get("past")) * 60000)) : urlParams && urlParams.get("future") ? new Date((Number(urlParams.get("future")) * 60000) + Number(new Date())) : new Date()
-            
-    const attemptPDF = (reason) => {
+    const attestationTime = () => new Date(Number(new Date()) + adjustment)
+    const datesortie = () => urlParams && urlParams.get("at") ? new Date().toLocaleString('fr-FR').substring(0,10) : attestationTime().toLocaleString('fr-FR').substring(0,10)
+    const heuresortie = () => urlParams && urlParams.get("at") ? urlParams.get("at") : attestationTime().toLocaleString('fr-FR').substring(13,18)
+        
+    const attemptPDF = async (reason) => {
         if (allFieldsValidated()) {
             let profile = {
                 address,
@@ -195,17 +197,14 @@ const App = () => {
                 zipcode,
                 firstname,
                 lastname,
-                datesortie: attestationTime().toLocaleString('fr-FR').substring(0,10),
-                heuresortie: urlParams && urlParams.get("at") ? urlParams.get("at") : attestationTime().toLocaleString('fr-FR').substring(13,18)
+                datesortie: datesortie(),
+                heuresortie: heuresortie()
             }
-            createPDF(profile, reason, pdfBase)
+            const pdfBlob = await generatePdf(profile, reason, pdfBase)
+            downloadBlob(pdfBlob, `attestation-sortir-io-${firstname}-${datesortie()}-${heuresortie()}.pdf`.split("/").join("_"))
             setDownloading(true)
             setTimeout(() => setDownloading(false), 5000)
-        } 
-    }
-    const createPDF = async (profile, reason, pdfBase) => {
-        const pdfBlob = await generatePdf(profile, reason, pdfBase)
-        downloadBlob(pdfBlob, `attestation-sortir-io-${attestationTime().getUTCDate()}_${attestationTime().getMonth() + 1}_${attestationTime().getUTCFullYear()}-${attestationTime().toLocaleTimeString('fr-FR')}.pdf`)
+        }
     }
     
     return (
@@ -244,7 +243,11 @@ const App = () => {
                 setAddress={setAddress}
                 setCity={setCity}
                 setZipcode={setZipcode}
-                attemptPDF={attemptPDF} />
+                attemptPDF={attemptPDF}
+                adjustment={adjustment}
+                setAdjustment={setAdjustment}
+                staticTime={staticTime}
+            />
 
             <Instructions setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} setEnglish={setEnglish} />
 
