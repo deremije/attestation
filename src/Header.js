@@ -4,13 +4,16 @@ const StyledHeader = styled.header`
     height: 60px;
     display: flex;
     background-color: #fff;
-    img {
+    a {
         display: block;
         margin: auto;
-        height: 24px;
+        height: auto;
         width: auto;
         position: relative;
         top: -1px;
+        img {
+            height: 24px;
+        }
     }
     .back {
         height: 32px;
@@ -64,8 +67,8 @@ const Header = ({ english, updateLanguage, setShowDescriptions, showDescriptions
     
     return (
         <StyledHeader showDescriptions={showDescriptions} >
-            <img src="logo.svg" onClick={() => {setShowDescriptions(false); setShowInstructions(false);}}/>
-            <img src="back-arrow.png" className='back' onClick={() => setShowDescriptions(false)} />
+            <a href="/"><img src="logo.svg" alt='Sortir.io Logo' /></a>
+            <img src="back-arrow.png" alt='Back to Reasons' className='back' onClick={() => setShowDescriptions(false)} />
             <StyledInfoIcon showDescriptions={showDescriptions} showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
             <StyledLangSelector onClick={() => updateLanguage()}>
                 <StyledLangButton currentLanguage={!english}>FR</StyledLangButton>

@@ -76,7 +76,50 @@ const App = () => {
     const [showInstructions, setShowInstructions] = useState(false)
     const [showMain, setShowMain] = useState(false)
     const [showDescriptions, setShowDescriptions] = useState(false)
+    const [generateDefault, setGenerateDefault] = useState(true)
+    const [urlParams, setUrlParams] = useState(new URLSearchParams(window.location.search))
     
+    const host = "http://www.sortir.io/"
+    const reasonsList = [
+        "travail",
+        "achats",
+        "sante",
+        "famille",
+        "handicap",
+        "sport",
+        "convocation",
+        "missions",
+        "ecole",
+        "work",
+        "shopping",
+        "health",
+        "family",
+        "disabled",
+        "exercise",
+        "school"
+    ]
+    const parseParams = (paramsArray) => {
+
+        let redirectAddress = `${host}?`
+        paramsArray.forEach((param) => {
+            console.log("parsing", param)
+            if (reasonsList.includes(param)) redirectAddress += `action=${param}&`
+            else if (param[0] === "@") redirectAddress += `at=${param.substring(1)}&`
+            else if (param[0] === "-" || param[0] === "m") redirectAddress += `past=${param.substring(1)}&`
+            else if (param[0] === "&" || param[0] === "p") redirectAddress += `future=${param.substring(1)}&`
+        })
+        if (redirectAddress === `${host}?`) redirectAddress = host
+        window.location = redirectAddress
+    }
+    useEffect(() => {
+        if (urlParams.get("params")) {
+            parseParams(urlParams.get("params").split("/"))
+        }
+        else if (window.location.pathname.length > 1) {
+            parseParams(window.location.pathname.substring(1).split("/"))
+        }
+    }, [])
+
     useEffect(() => {
         if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
         
@@ -95,12 +138,20 @@ const App = () => {
             setShowInstructions(true)
         }
     }, [])
+
+    const allFieldsValidated = () => {
+        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
+    }
+    useEffect(() => {
+        if (generateDefault && urlParams && urlParams.get("action") && allFieldsValidated()) {
+            setGenerateDefault(false)
+            if (window.localStorage.getItem('personal-info')) attemptPDF(urlParams.get("action"))
+        }
+    }, [allFieldsValidated()])
+
     const updateLanguage = () => {
         window.localStorage.setItem('use-english', !english)
         setEnglish(!english)
-    }
-    const allFieldsValidated = () => {
-        return address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     }
     const updateData = () => {
         if (allFieldsValidated()) {
@@ -133,7 +184,8 @@ const App = () => {
         }
     }
     const attemptPDF = (reason) => {
-        if (allFieldsValidated) {
+        if (allFieldsValidated()) {
+            const attestationTime = urlParams && urlParams.get("past") ? new Date(Number(new Date()) - (Number(urlParams.get("past")) * 60000)) : urlParams && urlParams.get("future") ? new Date((Number(urlParams.get("future")) * 60000) + Number(new Date())) : new Date()
             let profile = {
                 address,
                 birthday,
@@ -142,17 +194,8 @@ const App = () => {
                 zipcode,
                 firstname,
                 lastname,
-                "ox-achats": "achats",
-                "ox-convocation": "convocation",
-                "ox-enfants": "enfants",
-                "ox-famille": "famille",
-                "ox-handicap": "handicap",
-                "ox-missions": "missions",
-                "ox-sante": "sante",
-                "ox-sport_animaux": "sport_animaux",
-                "ox-travail": "travail",
-                datesortie: new Date().toLocaleString('fr-FR').substring(0,10),
-                heuresortie: new Date().toLocaleString('fr-FR').substring(13,18)
+                datesortie: attestationTime.toLocaleString('fr-FR').substring(0,10),
+                heuresortie: urlParams && urlParams.get("at") ? urlParams.get("at") : attestationTime.toLocaleString('fr-FR').substring(13,18)
             }
             createPDF(profile, reason, pdfBase)
             setDownloading(true)
@@ -186,7 +229,6 @@ const App = () => {
                 setShowReasons={setShowReasons} 
                 allFieldsValidated={allFieldsValidated}
                 updateData={updateData}
-                updateBirthday={updateBirthday}
                 updateBirthday={updateBirthday}
                 firstname={firstname}
                 lastname={lastname}

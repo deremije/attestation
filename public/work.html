@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/logo192.png" />
+    <meta
+        name="description"
+        content="Quick Generator for L'attestation de deplacement derogatoire during the COVID-19 lockdown in France"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
+    <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Work - Sortir.io</title>
+</head>
+<body>
+    <div class='container'>
+        <div class='logo'>
+            <img src="logo512.png" class='sortir' />
+            <span class='action'>🏢</span>
+        </div>
+        <h1>
+            WORK
+        </h1>
+        <p>
+            If you've already entered your information on <a href='https://www.sortir.io'>Sortir.io</a>, your attestation will be automatically generated in 10 seconds.  <a href="https://www.sortir.io/?action=travail">Click here to skip the wait.</a>    
+        </p>
+        <p>
+            Right now: Use the browser menu (or share button on iPhone) to add this link to your home screen.
+        </p>
+        <p>
+            Then <span onclick=skipWait() class='skipWait'>click here to automatically skip this page in the future.</span>
+        </p>
+    </div>
+</body>
+</html>
+
+<style>
+    body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        color: #1a1a1a;
+        background-color: #eee;
+    }
+    div.container {
+        position: relative;
+        width: 80%;
+        margin: auto;
+        height: auto;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    div.logo {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30vw;
+        height: auto;
+    }
+    img.sortir {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    span.action {
+        display: block;
+        position: absolute;
+        font-size: 60px;
+        bottom: 0;
+        right: 0;
+        transform: translate(30%, 10%);
+    }
+    a:link,
+    a:visited,
+    a:hover,
+    a:active,
+    span.skipWait {
+        color: cornflowerblue;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+
+    window.onload = () => {
+        console.log('loaded')
+        if (window.localStorage.getItem('skip_travail') === 'skip') go()
+        setTimeout(() => {
+            go()
+        }, 10000)
+    }
+
+    const go = () => {
+        window.location = "https://www.sortir.io/?action=travail"
+    }
+
+    const skipWait = () => {
+        window.localStorage.setItem('skip_travail', 'skip')
+        go()
+    }
+</script>

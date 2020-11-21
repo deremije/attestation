@@ -64,7 +64,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             }
         },
         {
-            reason: "sport_animaux",
+            reason: "sport",
             french: "Sport",
             english: "Exercise",
             emoji: "🏃‍♀️",
@@ -86,7 +86,7 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
         {
             reason: "handicap",
             french: "Handicap",
-            english: "Assist Disabled",
+            english: "Disabled",
             emoji: "♿",
             description: {
                 french: "Déplacement des personnes en situation de handicap et leur accompagnant",
@@ -104,8 +104,8 @@ const MainNavigation = ({ showDescriptions, setShowDescriptions, expandReasons, 
             }
         },
         {
-            reason: "enfants",
-            french: "L'ecole",
+            reason: "ecole",
+            french: "Ecole",
             english: "School",
             emoji: "🏫",
             description: {

@@ -7,10 +7,17 @@ const ys = {
   sante: 477,
   famille: 435,
   handicap: 396,
-  sport_animaux: 358,
+  sport: 358,
   convocation: 295,
   missions: 255,
-  enfants: 211,
+  ecole: 211,
+  work: 578,
+  shopping: 533,
+  health: 477,
+  family: 435,
+  disabled: 396,
+  exercise: 358,
+  school: 211,
 }
 
 export async function generatePdf (profile, reasons, pdfBase) {
