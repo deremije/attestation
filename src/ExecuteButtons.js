@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
 
 const StyledReasonButtons = styled.div`
     width: 100%;
@@ -91,24 +90,18 @@ const StyledTimeSelector = styled.div`
     }
 `   
 
-const ExecuteButtons = ({ now, attestationTime, staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, english, attemptPDF, setShowInfo, showReasons }) => {
+const ExecuteButtons = ({ urlParams, now, staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, english, attemptPDF, showReasons }) => {
     const backInTime = () => {
         setAdjustment(adjustment - 300000)
     }
     const forwardInTime = () => {
         setAdjustment(adjustment + 300000)
     }
-    const makeAttestation = (reason) => {
-        attemptPDF(reason)
-        if (reason === "sport") {
-            window.localStorage.setItem("lastSportTime", attestationTime())
-        }
-    }
-    
+        
     return (
         <StyledReasonButtons showReasons={showReasons}>
             {reasons.map(b => 
-                <button onClick={() => makeAttestation(b.reason)} key={b.reason}>
+                <button onClick={() => attemptPDF(b.reason)} key={b.reason}>
                     <div>
                         {b.emoji}
                         <span>
@@ -119,7 +112,7 @@ const ExecuteButtons = ({ now, attestationTime, staticTime, adjustment, setAdjus
             )}
         {staticTime ? 
             <StyledTimeSelector>
-                { staticTime }
+                <div></div><div>{ urlParams.get("at") }</div><div></div>
             </StyledTimeSelector> :
             <StyledTimeSelector>
                 <div className='text'>{english ? "Starting at" : "Heure de Sortie "}: </div>
