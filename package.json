@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "haversine-js": "^1.0.0",
     "pdf-lib": "^1.11.2",
     "qrcode": "^1.4.4",
     "react": "^17.0.1",

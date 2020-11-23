@@ -8,6 +8,8 @@ import styled from 'styled-components'
 import MainNavigation from "./MainNavigation"
 import Instructions from './Instructions'
 import Header from './Header'
+import SportInfo from './SportInfo'
+
 const StyledContainer = styled.div`
     text-align: center;
     font-family: 'Roboto', sans-serif;
@@ -80,7 +82,7 @@ const App = () => {
     const [adjustment, setAdjustment] = useState(0)
     const [staticTime, setStaticTime] = useState(null)
     
-    const host = "http://localhost:3000/"
+    const host = "https://www.sortir.xyz/"
     const reasonsList = [
         "travail",
         "achats",
@@ -99,6 +101,7 @@ const App = () => {
         "exercise",
         "school"
     ]
+    const displaySportInfo = () => window.localStorage.getItem("lastSportTime") && (new Date() < Number(new Date(window.localStorage.getItem("lastSportTime"))) + (1000 * 60 * 60))
     const parseParams = (paramsArray) => {
         let redirectAddress = `${host}?`
         paramsArray.forEach((param) => {
@@ -141,9 +144,7 @@ const App = () => {
     const allFieldsValidated = () => address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     
     useEffect(() => {
-        console.log('useEffect', generateDefault)
         if (generateDefault && urlParams && urlParams.get("action") && allFieldsValidated()) {
-            console.log('useEffect')
             setGenerateDefault(false)
             if (window.localStorage.getItem('personal-info')) attemptPDF(urlParams.get("action"))
         }
@@ -177,8 +178,10 @@ const App = () => {
     }
     useEffect(() => expandReasons(), [])
     const updateBirthday = (e) => {
-        if ((e.target.value.length === 2 && e.target.value.match(/\d{2}/)) || (e.target.value.length === 5 && e.target.value.match(/\d{2}\/\d{2}/))) {
-            setBirthday(`${e.target.value}/`)
+        if (e.target.value.length === 3 && e.target.value.match(/\d{3}/)) {
+            setBirthday(`${e.target.value.substring(0,2)}/${e.target.value.substring(2)}`)
+        } else if (e.target.value.length === 6 && e.target.value.match(/\d{2}\/\d{3}/)) {
+            setBirthday(`${e.target.value.substring(0,5)}/${e.target.value.substring(5)}`)
         } else {
             setBirthday(e.target.value)
         }
@@ -203,7 +206,7 @@ const App = () => {
             const pdfBlob = await generatePdf(profile, reason, pdfBase)
             downloadBlob(pdfBlob, `attestation-sortir-io-${firstname}-${datesortie()}-${heuresortie()}.pdf`.split("/").join("_"))
             setDownloading(true)
-            setTimeout(() => setDownloading(false), 5000)
+            if (!isFacebookBrowser()) setTimeout(() => setDownloading(false), 5000)
         }
     }
     
@@ -217,6 +220,7 @@ const App = () => {
                 setShowInstructions={setShowInstructions} />
          
             <MainNavigation 
+                attestationTime={attestationTime}
                 showDescriptions={showDescriptions}
                 setShowDescriptions={setShowDescriptions}
                 expandReasons={expandReasons}
@@ -250,6 +254,8 @@ const App = () => {
             />
 
             <Instructions setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} setEnglish={setEnglish} />
+
+            {displaySportInfo() ? <SportInfo english={english} /> : ""}
 
             <StyledConfirmation downloading={downloading}>
                 {isFacebookBrowser() ? 

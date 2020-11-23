@@ -35,7 +35,6 @@ const StyledReasonButtons = styled.div`
                 font-weight: bold;
             }
         }
-        
     }
 `
 const StyledInfoLink = styled.div`
@@ -52,12 +51,12 @@ const StyledTimeSelector = styled.div`
     height: 60px;
     line-height: 60px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     grid-column: 1 / span 3;
     background-color: #324977;
     color: white;
     display: grid;
-    grid-template-columns: 1fr 150px 1fr;
+    grid-template-columns: 1fr 70px 1fr;
     width: calc(100% - 40px);
     padding: 0 20px;
     div.text {
@@ -77,39 +76,39 @@ const StyledTimeSelector = styled.div`
         height: 60px;
         line-height: 60px;
         span {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: bold;
             display: inline-block;
             border: solid 2px white;
             border-radius: 50%;
-            height: 32px;
-            width: 32px;
-            line-height: 32px;
+            height: 24px;
+            width: 24px;
+            line-height: 24px;
             text-align: center;
             position: relative;
-            margin: 11px 5px 15px;
+            margin: 15px 5px;
         }
     }
 `   
 
-const ExecuteButtons = ({ staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, english, attemptPDF, setShowInfo, showReasons }) => {
-    const [now, setNow] = useState(Number(new Date()))
-    useEffect(() => {
-        setInterval(() => {
-            setNow(Number(new Date()), 1000)
-        })
-    }, [])
+const ExecuteButtons = ({ now, attestationTime, staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, english, attemptPDF, setShowInfo, showReasons }) => {
     const backInTime = () => {
         setAdjustment(adjustment - 300000)
     }
     const forwardInTime = () => {
         setAdjustment(adjustment + 300000)
     }
+    const makeAttestation = (reason) => {
+        attemptPDF(reason)
+        if (reason === "sport") {
+            window.localStorage.setItem("lastSportTime", attestationTime())
+        }
+    }
     
     return (
         <StyledReasonButtons showReasons={showReasons}>
             {reasons.map(b => 
-                <button onClick={() => attemptPDF(b.reason)} key={b.reason}>
+                <button onClick={() => makeAttestation(b.reason)} key={b.reason}>
                     <div>
                         {b.emoji}
                         <span>

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import MyData from './MyData'
 import ExecuteButtons from './ExecuteButtons'
 import Descriptions from './Descriptions'
+import { useState, useEffect } from 'react'
 
 const StyledMain = styled.section`
     background-color: white;
@@ -46,7 +47,7 @@ const StyledFooter = styled.footer`
     transform: scaleY(${props => props.showData || props.showReasons ? "0" : "1"});
 `
 
-const MainNavigation = ({ staticTime, adjustment, setAdjustment, showDescriptions, setShowDescriptions, expandReasons, setShowInfo, attemptPDF, updateLanguage, english, setEnglish, showData, showReasons, setShowReasons, allFieldsValidated, updateBirthday, updateData, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
+const MainNavigation = ({ attestationTime, staticTime, adjustment, setAdjustment, showDescriptions, setShowDescriptions, expandReasons, setShowInfo, attemptPDF, updateLanguage, english, setEnglish, showData, showReasons, setShowReasons, allFieldsValidated, updateBirthday, updateData, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const expandData = () => {
         setShowData(true)
         setShowReasons(false)
@@ -143,7 +144,14 @@ const MainNavigation = ({ staticTime, adjustment, setAdjustment, showDescription
                 english: "Consultations, examinations and care that cannot be provided remotely and the purchase of medication"
             }
         },
-    ]    
+    ]  
+    
+    const [now, setNow] = useState(Number(new Date()))
+    useEffect(() => {
+        setInterval(() => {
+            setNow(Number(new Date()), 1000)
+        })
+    }, [])
     
     return (
         <StyledMain>
@@ -176,6 +184,8 @@ const MainNavigation = ({ staticTime, adjustment, setAdjustment, showDescription
             </StyledReasonButton>
             {showReasons ? 
                 <ExecuteButtons
+                    now={now}
+                    attestationTime={attestationTime}
                     staticTime={staticTime}
                     adjustment={adjustment}
                     setAdjustment={setAdjustment}
