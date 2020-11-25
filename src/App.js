@@ -11,6 +11,8 @@ import Descriptions from './Descriptions'
 import Instructions from './Instructions'
 import Header from './Header'
 import SportInfo from './SportInfo'
+import content from './content'
+import reasons from './reasons'
 
 const StyledContainer = styled.div`
     text-align: center;
@@ -114,7 +116,6 @@ const App = () => {
     const [lastname, setLastname] = useState("")
     const [placeofbirth, setPlaceofbirth] = useState("")
     const [zipcode, setZipcode] = useState("")
-    const [english, setEnglish] = useState(false)
     const [showData, setShowData] = useState(false)
     const [downloading, setDownloading] = useState(false)
     const [showReasons, setShowReasons] = useState(false)
@@ -124,32 +125,45 @@ const App = () => {
     const [urlParams, setUrlParams] = useState(new URLSearchParams(window.location.search))
     const [adjustment, setAdjustment] = useState(0)
     const [staticTime, setStaticTime] = useState(null)
+    const [language, setLanguage] = useState("french")
     
-    const host = "http://localhost:3000/"
-    const reasonsList = [
-        "travail",
-        "achats",
-        "sante",
-        "famille",
-        "handicap",
-        "sport",
-        "convocation",
-        "missions",
-        "ecole",
-        "work",
-        "shopping",
-        "health",
-        "family",
-        "disabled",
-        "exercise",
-        "school"
-    ]
+    const host = "http://localhost:3000"
+    const reasonsList = () => {
+        let array = []
+        reasons.forEach(reason => {
+            ["french", "english", "german", "italian", "spanish"].forEach(lang => {
+                if (reason[lang] && !array.includes(reason[lang].toLowerCase())) {
+                    array.push(reason[lang].toLowerCase())
+                }
+            })
+        })
+        return array
+    }
+    
+    // [
+    //     "travail",
+    //     "achats",
+    //     "sante",
+    //     "famille",
+    //     "handicap",
+    //     "sport",
+    //     "convocation",
+    //     "missions",
+    //     "ecole",
+    //     "work",
+    //     "shopping",
+    //     "health",
+    //     "family",
+    //     "disabled",
+    //     "exercise",
+    //     "school"
+    // ]
     const [lastSportTime, setLastSportTime] = useState(window.localStorage.getItem("lastSportTime") ? new Date(window.localStorage.getItem("lastSportTime")) : null)
     const displaySportInfo = () => lastSportTime && (new Date() < Number(new Date(lastSportTime)) + (1000 * 60 * 60))
     const parseParams = (paramsArray) => {
         let redirectAddress = `${host}?`
         paramsArray.forEach((param) => {
-            if (reasonsList.includes(param)) redirectAddress += `action=${param}&`
+            if (reasonsList().includes(param)) redirectAddress += `action=${param}&`
             else if (param[0] === "@") redirectAddress += `at=${param.substring(1)}&`
             else if (param[0] === "-" || Number(param) == param) redirectAddress += `adjust=${param}&`
         })
@@ -162,6 +176,7 @@ const App = () => {
             setStaticTime(`${d.substring(0,16)}${urlParams.get("at")}${d.substring(21)}`)   
         }
     }
+    const english = () => language === "english"
     useEffect(() => {
         if (urlParams.get("params")) {
             parseParams(urlParams.get("params").split("/"))
@@ -174,8 +189,6 @@ const App = () => {
     }, [])
 
     useEffect(() => {
-        if (window.localStorage.getItem('use-english')) setEnglish(window.localStorage.getItem('use-english') === "true")
-        
         if (window.localStorage.getItem('personal-info')) {
             let personalInfo = JSON.parse(window.localStorage.getItem('personal-info'))
             setAddress(personalInfo.address) 
@@ -193,12 +206,23 @@ const App = () => {
 
     const allFieldsValidated = () => address.length && birthday.length === 10 && city.length && firstname.length && lastname.length && placeofbirth.length && zipcode.length >= 5 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)
     
-    
-
-    const updateLanguage = () => {
-        window.localStorage.setItem('use-english', !english)
-        setEnglish(!english)
+    const updateLanguage = (lang) => {
+        window.localStorage.setItem('language', lang)
+        setLanguage(lang)
     }
+    
+    useEffect(() => {
+        if (window.localStorage.getItem("language")) setLanguage(window.localStorage.getItem("language"))
+        else {
+            if (window.localStorage.getItem('use-english') === "true") {
+                updateLanguage("english")
+            }
+            if (window.localStorage.getItem('use-english') === "false") {
+                updateLanguage("french")
+            }
+            window.localStorage.removeItem('use-english')
+        }
+    }, [])
     const updateData = () => {
         if (allFieldsValidated()) {
             window.localStorage.setItem('personal-info', 
@@ -271,101 +295,6 @@ const App = () => {
         setShowReasons(false)
     }
 
-    const reasons = [
-        {
-            reason: "travail",
-            french: "Travail",
-            english: "Work",
-            emoji: "🏢",
-            description: {
-                french: "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
-                english: "Travel between the home and the place of exercise of the professional activity or an educational or training establishment, professional travel that cannot be postponed, travel for a competition or an exam."
-            }
-        },
-        {
-            reason: "sport",
-            french: "Sport",
-            english: "Exercise",
-            emoji: "🏃‍♀️",
-            description: {
-                french: "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie",
-                english: "Short trips, within the limit of one hour daily and within a maximum radius of one kilometer around the home, related either to the individual physical activity of the persons, excluding any collective sports practice and any proximity with other persons, or to the walk with only the persons grouped together in the same home, or to the needs of pets."
-            }
-        },
-        {
-            reason: "achats",
-            french: "Achats",
-            english: "Shopping",
-            emoji: "🛒",
-            description: {
-                french: "Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle, des achats de première nécessité dans des établissements dont les activités demeurent autorisées, le retrait de commande et les livraisons à domicile.",
-                english: "Travel to make purchases of supplies necessary for the professional activity, purchases of basic necessities in establishments whose activities remain authorized, withdrawal of orders and home deliveries."
-            }
-        },
-        {
-            reason: "handicap",
-            french: "Handicap",
-            english: "Disabled",
-            emoji: "♿",
-            description: {
-                french: "Déplacement des personnes en situation de handicap et leur accompagnant",
-                english: "Movement of people with disabilities and their companions"
-            }
-        },
-        {
-            reason: "missions",
-            french: "Missions",
-            english: "Missions",
-            emoji: "😇",
-            description: {
-                french: "Participation à des missions d'intérêt général sur demande de l'autorité administrative",
-                english: "Participation in missions of general interest at the request of the administrative authority"
-            }
-        },
-        {
-            reason: "ecole",
-            french: "Ecole",
-            english: "School",
-            emoji: "🏫",
-            description: {
-                french: "Déplacement pour chercher les enfants à l’école et à l’occasion de leurs activités périscolaires",
-                english: "Travel to pick up children at school and during their extracurricular activities"
-            }
-        },
-        {
-            reason: "convocation",
-            french: "Convocation",
-            english: "Convocation",
-            emoji: "⚖️",
-            description: {
-                french: "Convocation judiciaire ou administrative et pour se rendre dans un service public",
-                english: "Judicial or administrative summons and to attend public services"
-            }
-        },
-        {
-            reason: "famille",
-            french: "Famille",
-            english: "Family",
-            emoji: "👨‍👩‍👧‍👧",
-            description: {
-                french: "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants",
-                english: "Travel for compelling family reasons, for assistance to vulnerable and precarious persons or for child care"
-            }
-        },
-        {
-            reason: "sante",
-            french: "Sante",
-            english: "Health",
-            emoji: "⚕️",
-            description: {
-                french: "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments",
-                english: "Consultations, examinations and care that cannot be provided remotely and the purchase of medication"
-            }
-        },
-    ]  
-    
-    
-
     const updateLastSportTime = (newTime) => {
         setLastSportTime(newTime)
         window.localStorage.setItem("lastSportTime", newTime)
@@ -374,13 +303,15 @@ const App = () => {
         if (generateDefault && urlParams && urlParams.get("action") && allFieldsValidated()) {
             setGenerateDefault(false)
             updateStaticTime()
-            if (window.localStorage.getItem('personal-info')) attemptPDF(urlParams.get("action"))
+            let action = reasons.filter(reason => Object.values(reason).includes(urlParams.get("action")[0].toUpperCase() + urlParams.get("action").substring(1)))[0].reason
+            if (window.localStorage.getItem('personal-info')) attemptPDF(action)
         }
     }, [allFieldsValidated()])
     
     return (
         <StyledContainer>
-            <Header english={english} 
+            <Header  
+                language={language}
                 updateLanguage={updateLanguage}
                 setShowDescriptions={setShowDescriptions}
                 showDescriptions={showDescriptions}
@@ -389,10 +320,13 @@ const App = () => {
          
             <StyledMain>
                 <StyledInfoButton showReasons={showReasons} showData={showData} allFieldsValidated={allFieldsValidated()} onClick={() => allFieldsValidated() && !showReasons ? expandReasons() : expandData()}>
-                    <span>{showReasons ? english ? "Your Info" : "Vos informations" : english ? "Enter your info" : "Entrez vos informations"}</span>
+                    <span>{showReasons ? content.nav["Your Info"][language] : content.nav["Enter your info"][language]}</span>
                 </StyledInfoButton>
                 
-                <MyData updateLanguage={updateLanguage}
+                <MyData 
+                    language={language}
+                    content={content.myData}
+                    updateLanguage={updateLanguage}
                     updateBirthday={updateBirthday}
                     updateData={updateData}
                     english={english}
@@ -413,10 +347,12 @@ const App = () => {
                     showData={showData} />
 
                 <StyledReasonButton showData={showData} showReasons={showReasons} allFieldsValidated={allFieldsValidated()} onClick={() => expandReasons()}>
-                    <span>{english ? "Choose your reason to go out" : "Choisissez votre raison de sortir"}</span>
+                    <span>{content.nav["Choose your reason to go out"][language]}</span>
                 </StyledReasonButton>
                 {showReasons ? 
                     <ExecuteButtons
+                        language={language}
+                        content={content.reasons}
                         urlParams={urlParams}
                         attemptPDF={attemptPDF}
                         now={now}
@@ -429,17 +365,17 @@ const App = () => {
                         showReasons={showReasons}
                         setShowDescriptions={setShowDescriptions} /> : ""}
                 <StyledFooter showData={showData} showReasons={showReasons}>... {english ? "to generate Attestation" : "pour générer une Attestation"}</StyledFooter> 
-                <Descriptions showDescriptions={showDescriptions} english={english} setShowDescriptions={setShowDescriptions} attemptPDF={attemptPDF} reasons={reasons} />
+                <Descriptions language={language} content={content.reasons} showDescriptions={showDescriptions} setShowDescriptions={setShowDescriptions} attemptPDF={attemptPDF} reasons={reasons} />
             </StyledMain>
 
-            <Instructions setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} setEnglish={setEnglish} />
+            <Instructions language={language} setLanguage={setLanguage} content={content.instructions} setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} />
 
-            {displaySportInfo() ? <SportInfo now={now} lastSportTime={lastSportTime} english={english} /> : ""}
+            {displaySportInfo() ? <SportInfo now={now} lastSportTime={lastSportTime} language={language} content={content.sport} english={english} /> : ""}
 
             <StyledConfirmation downloading={downloading}>
                 {isFacebookBrowser() ? 
-                    english ? "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." : "Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser." :
-                    english ? "Generating your attestation. Please check for it in your downloads." : "Génération de l'attestation.  Veuillez le vérifier dans vos téléchargements."
+                    content.nav["Sortir.io cannot generate an attestation in Facebook browser. Please visit Sortir.io in any other browser."][language] :
+                    content.nav["Generating your attestation. Please check for it in your downloads."][language]
                 }
             </StyledConfirmation>
 

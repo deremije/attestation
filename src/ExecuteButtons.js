@@ -90,7 +90,7 @@ const StyledTimeSelector = styled.div`
     }
 `   
 
-const ExecuteButtons = ({ urlParams, now, staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, english, attemptPDF, showReasons }) => {
+const ExecuteButtons = ({ language, content, urlParams, now, staticTime, adjustment, setAdjustment, reasons, setShowDescriptions, attemptPDF, showReasons }) => {
     const backInTime = () => {
         setAdjustment(adjustment - 300000)
     }
@@ -105,7 +105,7 @@ const ExecuteButtons = ({ urlParams, now, staticTime, adjustment, setAdjustment,
                     <div>
                         {b.emoji}
                         <span>
-                            {english ? b.english : b.french}
+                            {b[language]}
                         </span>
                     </div>
                 </button>
@@ -115,8 +115,8 @@ const ExecuteButtons = ({ urlParams, now, staticTime, adjustment, setAdjustment,
                 <div></div><div>{ urlParams.get("at") }</div><div></div>
             </StyledTimeSelector> :
             <StyledTimeSelector>
-                <div className='text'>{english ? "Starting at" : "Heure de Sortie "}: </div>
-                <div onClick={() => setAdjustment(0)}>{new Date(now + adjustment).toLocaleTimeString("fr-FR").substring(0,5).split(":").join(english ? ":" : "h")}</div>
+                <div className='text'>{content["Starting at"][language]}: </div>
+                <div onClick={() => setAdjustment(0)}>{new Date(now + adjustment).toLocaleTimeString("fr-FR").substring(0,5).split(":").join(content[":"][language])}</div>
                 <div className='adjust'>
                     <span onClick={backInTime}> - </span>
                     <span onClick={forwardInTime}> + </span> 
@@ -124,7 +124,7 @@ const ExecuteButtons = ({ urlParams, now, staticTime, adjustment, setAdjustment,
             </StyledTimeSelector> 
         }
             <StyledInfoLink onClick={() => setShowDescriptions(true)}>
-                {english ? "Which reason should I choose?" : "Quelle raison devrais-je choisir ?"}
+                {content["Which reason should I choose?"][language]}
             </StyledInfoLink>
         </StyledReasonButtons>
     )

@@ -65,7 +65,8 @@ const StyledGPSButton = styled(StyledButton)`
     height: auto;
     width: auto;
     padding: 13px 10px;
-    border: solid 1px white;
+    background-color: white;
+    color: #205DDB;
 `
 const StyledOverlayIcon = styled.div`
     font-size: 40px;
@@ -82,7 +83,7 @@ const StyledOverlayIcon = styled.div`
     border: solid 2px #205DDB;
 `
 
-const SportInfo = ({ english, lastSportTime, now }) => {
+const SportInfo = ({ lastSportTime, now, language, content }) => {
     const formatTime = () => {
         const getTotalSeconds = () => {
             if (new Date(now) > new Date(lastSportTime)) return 3600 - (new Date(now) - new Date(lastSportTime)) / 1000
@@ -131,20 +132,20 @@ const SportInfo = ({ english, lastSportTime, now }) => {
         <StyledSportInfo showModal={showModal}>
             <StyledContainer showModal={showModal}>
                 <h1 className='icon'><span style={{"fontSize": "36px"}}>🐩</span>🏃‍♀️</h1>
-                {english ? "Exercise period" : "Période du sport"} {new Date() > new Date(lastSportTime) ? english ? "ends in" : "se termine en" : english ? "starts in" : "commence en "}:
+                {content["Exercise period"][language]} {new Date() > new Date(lastSportTime) ? content["ends in"][language] : content["starts in"][language]}:
                 <h1>{displayTime}</h1>
                 <StyledDistance>
                     {homeCoords ? 
                     <div onClick={updateCoords}>
-                        {english ? "Distance from home" : "Distance de votre maison "}:
+                        {content["Distance from home"][language]}:
                         <h1>
                             {currentCoords ? haversine(homeCoords, currentCoords, {radius: haversine.EARTH.M}).toFixed(0) : "0"}m
                         </h1> 
                     </div> :
                     <div>
-                        <p>{english ? "Click to save your home GPS coordinates and stay within 1km" : "Cliquez pour enregistrer les coordonnées GPS de votre domicile et rester à moins d'un kilomètre"}</p>
-                        <StyledGPSButton onClick={saveCoords}>{english ? "I am home right now" : "Je suis chez moi"}</StyledGPSButton>
-                        <p>{english ? "Location data is not sent to anyone" : "Les données de localisation ne sont envoyées à personne"}</p>
+                        <p>{content["Click to save your home GPS coordinates and stay within 1km"][language]}</p>
+                        <StyledGPSButton onClick={saveCoords}>{content["I am home right now"][language]}</StyledGPSButton>
+                        <p>{content["Location data is not sent to anyone"][language]}</p>
                     </div>
                 }
                 </StyledDistance>

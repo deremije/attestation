@@ -40,40 +40,34 @@ const StyledInfoIcon = styled.div`
     transform: translateX(${props => props.showInstructions || props.showDescriptions ? "-72px" : "0"});
     transition: all 200ms linear;
 `
-const StyledLangSelector = styled.div`
+const StyledSelect = styled.select`
     padding: 0;
-    line-height: 24px;
-    height: 24px;
+    line-height: 40px;
+    height: 40px;
     text-align: center;
     position: absolute;
     right: 15px;
-    top: 18px;
-    display: flex;
-    justify-content: center;
-`
-const StyledLangButton = styled.div`
-    font-weight: bold;
-    font-size: 12px;
-    width: 28px;
-    height: 20px;
-    line-height: 20px;
-    border: solid 2px #3c70e0;
-    transition: all 200ms linear;
-    background-color: ${props => props.currentLanguage ? "#3c70e0" : "white"};
-    color: ${props => props.currentLanguage ? "white" : "#3c70e0"};
+    top: 8px;
+    border-color: #3c70e0;
+    border: none;
+    color: #3c70e0;
+    font-size: 24px;
 `
 
-const Header = ({ english, updateLanguage, setShowDescriptions, showDescriptions, setShowInstructions, showInstructions }) => {
+const Header = ({ language, updateLanguage, setShowDescriptions, showDescriptions, setShowInstructions, showInstructions }) => {
     
     return (
         <StyledHeader showDescriptions={showDescriptions} >
             <a href="/"><img src="logo.svg" alt='Sortir.io Logo' /></a>
             <img src="back-arrow.png" alt='Back to Reasons' className='back' onClick={() => setShowDescriptions(false)} />
             <StyledInfoIcon showDescriptions={showDescriptions} showInstructions={showInstructions} onClick={() => setShowInstructions(true)}>i</StyledInfoIcon>
-            <StyledLangSelector onClick={() => updateLanguage()}>
-                <StyledLangButton currentLanguage={!english}>FR</StyledLangButton>
-                <StyledLangButton currentLanguage={english}>EN</StyledLangButton>
-            </StyledLangSelector>
+            <StyledSelect value={language} onChange={(e) => updateLanguage(e.target.value)}>
+                <option value="french">FR</option>
+                <option value="italian">IT</option>
+                <option value="spanish">ES</option>
+                <option value="english">EN</option>
+                <option value="german">DE</option>
+            </StyledSelect>
         </StyledHeader>
     )
 }

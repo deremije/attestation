@@ -38,7 +38,7 @@ const StyledDescriptions = styled.section`
     }    
 `
 
-const Info = ({ english, setShowDescriptions, attemptPDF, reasons, showDescriptions }) => {
+const Info = ({ language, content, setShowDescriptions, attemptPDF, reasons, showDescriptions }) => {
     const choose = (reason) => {
         attemptPDF(reason)
         setShowDescriptions(false)
@@ -48,15 +48,15 @@ const Info = ({ english, setShowDescriptions, attemptPDF, reasons, showDescripti
             {reasons.map(b => 
                 <div key={b.french}>
                     <span className='icon' onClick={() => choose(b.reason)}>{b.emoji}</span>
-                    <span className='title'>{english ? b.english : b.french}</span>
+                    <span className='title'>{b[language]}</span>
                     <p>
-                        {b.description[english ? "english" : "french"]}
+                        {b.description[language]}
                     </p>
                 </div>
             )}
             
             <StyledButton onClick={() => setShowDescriptions(false)}>
-                {english ? "Back" : "Retour"}
+                {content["Back"][language]}
             </StyledButton> 
         </StyledDescriptions>
     )

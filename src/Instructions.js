@@ -43,40 +43,37 @@ const StyledInstructions = styled.div`
     }
 `
 
-const Instructions = ({ showInstructions, setShowInstructions, english, setEnglish }) => {
+const Instructions = ({ content, showInstructions, setShowInstructions, language }) => {
     return (
         <StyledInstructions showInstructions={showInstructions}>
             <h4>
-               {english ? "Generate your" : "Générez votre"}<br />
+                {content["Generate your"][language]}<br />
                 <strong>Attestation de déplacement dérogatoire</strong>
             </h4>
             <h1>
-                {english ? "SUPER FAST" : "SUPER RAPIDE"}
-            </h1>
-            {english ? 
+            {content["SUPER FAST"][language]}
+            </h1> 
             <p>
-                Enter your info just <strong>once</strong>. Then, create an Attestation in <strong>one tap</strong>.
-            </p> : 
-            <p>
-                Entrez vos informations <strong>une seule fois</strong>. Ensuite, créez une attestation en <strong>un seul clic</strong>.
-            </p>}
+                {content["Enter your info just"][language]}&nbsp;
+                <strong>{content["once"][language]}</strong>.&nbsp;
+                {content["Then, create an Attestation in"][language]}&nbsp;  
+                <strong>{content["one tap"][language]}</strong>.
+            </p>
             <h1>
-                {english ? "TOTAL PRIVACY" : "CONFIDENTIALITÉ TOTALE"}
+                {content["TOTAL PRIVACY"][language]}
             </h1>
-            {english ? 
             <p>
-                Your info is <strong>only</strong> stored on <strong>your device</strong> and never seen, sent, or sold to <strong>anyone</strong>.
-            </p> :
-            <p>
-                Vos informations sont <strong>uniquement</strong> stockées sur <strong>votre appareil</strong> et ne sont jamais vues, envoyées ou vendues à <strong>personne</strong>.
-            </p>}
+                {content["Your info is"][language]}&nbsp;
+                <strong>{content["only"][language]}</strong>&nbsp;  
+                {content["stored on"][language]}&nbsp;
+                <strong>{content["your device"][language]}</strong>&nbsp;
+                {content["and never seen, sent, or sold to"][language]}&nbsp;
+                <strong>{content["anyone"][language]}</strong>.
+            </p>
             <StyledButton type="button" onClick={() => setShowInstructions(false)}>
-                {english ? 
-                    "Let's Go" : 
-                    "Allons-y"
-                }
+                {content["LET'S GO"][language]}
             </StyledButton>
-            <FAQ english={english} setEnglish={setEnglish} />
+            <FAQ language={language} />
         </StyledInstructions>
     )
 }
