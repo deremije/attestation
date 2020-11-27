@@ -9,12 +9,21 @@ const StyledDataForm = styled(StyledSection)`
     }
 `
 
-const MyData = ({ language, content, showData, updateBirthday, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
+const MyData = ({ language, content, showData, setBirthday, firstname, lastname, birthday, placeofbirth, address, city, zipcode, setFirstname, setLastname, setPlaceofbirth, setAddress, setCity, setZipcode, setShowData }) => {
     const birthdayValid = () => {
         return birthday.length === 0 || (birthday.length === 10 && birthday.match(/\d{2}\/\d{2}\/\d{4}/)) ? "" : "error"
     }
     const postalCodeValid = () => {
         return zipcode.length >= 5 || zipcode.length === 0 ? "" : "error"
+    }
+    const updateBirthday = (e) => {
+        if (e.target.value.length === 3 && e.target.value.match(/\d{3}/)) {
+            setBirthday(`${e.target.value.substring(0,2)}/${e.target.value.substring(2)}`)
+        } else if (e.target.value.length === 6 && e.target.value.match(/\d{2}\/\d{3}/)) {
+            setBirthday(`${e.target.value.substring(0,5)}/${e.target.value.substring(5)}`)
+        } else {
+            setBirthday(e.target.value)
+        }
     }
     return (
         <StyledDataForm showData={showData}>

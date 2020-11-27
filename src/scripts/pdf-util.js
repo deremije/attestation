@@ -11,13 +11,6 @@ const ys = {
   convocation: 295,
   missions: 255,
   ecole: 211,
-  work: 578,
-  shopping: 533,
-  health: 477,
-  family: 435,
-  disabled: 396,
-  exercise: 358,
-  school: 211,
 }
 
 export async function generatePdf (profile, reasons, pdfBase) {

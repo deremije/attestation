@@ -11,8 +11,9 @@ import Descriptions from './Descriptions'
 import Instructions from './Instructions'
 import Header from './Header'
 import SportInfo from './SportInfo'
-import content from './content'
-import reasons from './reasons'
+import NewUpdates from './NewUpdates'
+import {content, reasons} from './content'
+import {host, version} from './system'
 
 const StyledContainer = styled.div`
     text-align: center;
@@ -68,17 +69,6 @@ const StyledReasonButton = styled(DynamicButtonTemplate)`
     height: ${props => props.showData || props.showReasons ? "60px" : "calc(50% - 31px)"};
     transform-origin: bottom;
 `
-const StyledFooter = styled.footer`
-    text-align: center;
-    font-size: 18px;
-    line-height: 60px;
-    width: 100%;
-    height: 60px;
-    color: #484848;
-    position: relative;
-    transition: all 200ms linear;
-    transform: scaleY(${props => props.showData || props.showReasons ? "0" : "1"});
-`
 const StyledConfirmation = styled.div`
     position: absolute;
     top: 50%;
@@ -126,8 +116,8 @@ const App = () => {
     const [adjustment, setAdjustment] = useState(0)
     const [staticTime, setStaticTime] = useState(null)
     const [language, setLanguage] = useState("french")
+    const [showUpdates, setShowUpdates] = useState(true)
     
-    const host = "http://localhost:3000"
     const reasonsList = () => {
         let array = []
         reasons.forEach(reason => {
@@ -139,25 +129,6 @@ const App = () => {
         })
         return array
     }
-    
-    // [
-    //     "travail",
-    //     "achats",
-    //     "sante",
-    //     "famille",
-    //     "handicap",
-    //     "sport",
-    //     "convocation",
-    //     "missions",
-    //     "ecole",
-    //     "work",
-    //     "shopping",
-    //     "health",
-    //     "family",
-    //     "disabled",
-    //     "exercise",
-    //     "school"
-    // ]
     const [lastSportTime, setLastSportTime] = useState(window.localStorage.getItem("lastSportTime") ? new Date(window.localStorage.getItem("lastSportTime")) : null)
     const displaySportInfo = () => lastSportTime && (new Date() < Number(new Date(lastSportTime)) + (1000 * 60 * 60))
     const parseParams = (paramsArray) => {
@@ -176,19 +147,15 @@ const App = () => {
             setStaticTime(`${d.substring(0,16)}${urlParams.get("at")}${d.substring(21)}`)   
         }
     }
-    const english = () => language === "english"
     useEffect(() => {
-        if (urlParams.get("params")) {
-            parseParams(urlParams.get("params").split("/"))
-        }
-        else if (window.location.pathname.length > 1) {
-            parseParams(window.location.pathname.substring(1).split("/"))
-        }
+        if (urlParams.get("params")) parseParams(urlParams.get("params").split("/"))
+        else if (window.location.pathname.length > 1) parseParams(window.location.pathname.substring(1).split("/"))
         else if (urlParams.get("adjust")) setAdjustment(60000 * Number(urlParams.get("adjust")))
         else updateStaticTime()
     }, [])
 
     useEffect(() => {
+        if (window.localStorage.getItem("version") === version || window.localStorage.getItem("noUpdateNotes")) setShowUpdates(false)
         if (window.localStorage.getItem('personal-info')) {
             let personalInfo = JSON.parse(window.localStorage.getItem('personal-info'))
             setAddress(personalInfo.address) 
@@ -246,15 +213,7 @@ const App = () => {
         }
     }
     useEffect(() => expandReasons(), [])
-    const updateBirthday = (e) => {
-        if (e.target.value.length === 3 && e.target.value.match(/\d{3}/)) {
-            setBirthday(`${e.target.value.substring(0,2)}/${e.target.value.substring(2)}`)
-        } else if (e.target.value.length === 6 && e.target.value.match(/\d{2}\/\d{3}/)) {
-            setBirthday(`${e.target.value.substring(0,5)}/${e.target.value.substring(5)}`)
-        } else {
-            setBirthday(e.target.value)
-        }
-    }
+    
     const [now, setNow] = useState(Number(new Date()))
     useEffect(() => {
         setInterval(() => {
@@ -307,7 +266,10 @@ const App = () => {
             if (window.localStorage.getItem('personal-info')) attemptPDF(action)
         }
     }, [allFieldsValidated()])
-    
+    const versionCheck = () => window.localStorage.getItem("version")
+    useEffect(() => {
+        if (window.localStorage.getItem("version") !== version) setShowUpdates(true)
+    }, [versionCheck()])
     return (
         <StyledContainer>
             <Header  
@@ -327,9 +289,8 @@ const App = () => {
                     language={language}
                     content={content.myData}
                     updateLanguage={updateLanguage}
-                    updateBirthday={updateBirthday}
+                    setBirthday={setBirthday}
                     updateData={updateData}
-                    english={english}
                     firstname={firstname}
                     lastname={lastname}
                     birthday={birthday}
@@ -361,16 +322,16 @@ const App = () => {
                         adjustment={adjustment}
                         setAdjustment={setAdjustment}
                         reasons={reasons} 
-                        english={english} 
                         showReasons={showReasons}
                         setShowDescriptions={setShowDescriptions} /> : ""}
-                <StyledFooter showData={showData} showReasons={showReasons}>... {english ? "to generate Attestation" : "pour générer une Attestation"}</StyledFooter> 
                 <Descriptions language={language} content={content.reasons} showDescriptions={showDescriptions} setShowDescriptions={setShowDescriptions} attemptPDF={attemptPDF} reasons={reasons} />
             </StyledMain>
 
-            <Instructions language={language} setLanguage={setLanguage} content={content.instructions} setShowInstructions={setShowInstructions} showInstructions={showInstructions} english={english} />
+            <Instructions setShowUpdates={setShowUpdates} language={language} setLanguage={setLanguage} content={content.instructions} setShowInstructions={setShowInstructions} showInstructions={showInstructions} />
 
-            {displaySportInfo() ? <SportInfo now={now} lastSportTime={lastSportTime} language={language} content={content.sport} english={english} /> : ""}
+            {displaySportInfo() ? <SportInfo now={now} lastSportTime={lastSportTime} language={language} content={content.sport} /> : ""}
+
+            {showUpdates ? <NewUpdates content={content.updates} language={language} version={version} setShowUpdates={setShowUpdates} /> : ""}
 
             <StyledConfirmation downloading={downloading}>
                 {isFacebookBrowser() ? 
